@@ -3,10 +3,10 @@ package org.deneb.tp1.ejercicio3;
 public class Articulo {
     private int codigo;
     private String descripcion;
-    private float precio;
+    private double precio;
     private int cantidad;
 
-    public Articulo(int codigo, String descripcion, float precio, int cantidad) {
+    public Articulo(int codigo, String descripcion, double precio, int cantidad) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.precio = precio;
@@ -29,11 +29,11 @@ public class Articulo {
         this.descripcion = descripcion;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
 
-    public void setPrecio(float precio) {
+    public void setPrecio(double precio) {
         this.precio = precio;
     }
 

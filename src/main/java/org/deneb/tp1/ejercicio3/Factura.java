@@ -1,32 +1,36 @@
 package org.deneb.tp1.ejercicio3;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Factura {
+    private boolean ctaCte;
     private int numFactura;
-    private Date fecha;
+    private LocalDate fecha;
     private List<ItemFactura> items;
     private Cliente cliente;
+
+    public Factura(int numero, LocalDate fecha, Cliente cliente, Articulo articulo, int cantidad, boolean ctaCte) throws StockInsuficienteException, ArticuloRepetidoException {
+        this.fecha = fecha;
+        items = new ArrayList<>();
+        agregarItem(articulo, cantidad);
+        this.numFactura = numero;
+        this.fecha = fecha;
+        this.cliente = cliente;
+        this.ctaCte = ctaCte;
+    }
 
     public Cliente getCliente() {
         return cliente;
     }
 
-    public Factura(int numFactura, Date fecha, Articulo articulo, int cantidad) throws ArticuloRepetidoException, StockInsuficienteException {
+    public Factura(int numFactura, LocalDate fecha, Articulo articulo, int cantidad) throws ArticuloRepetidoException, StockInsuficienteException {
         this.numFactura = numFactura;
         this.fecha = fecha;
         items = new ArrayList<>();
-        agregarItemFactura(articulo, cantidad);
-    }
-
-    public Factura(int numFactura, Date fecha, Articulo articulo, int cantidad, Cliente cliente) throws ArticuloRepetidoException, StockInsuficienteException {
-        this.numFactura = numFactura;
-        this.fecha = fecha;
-        items = new ArrayList<>();
-        agregarItemFactura(articulo, cantidad);
-        this.cliente = cliente;
+        agregarItem(articulo, cantidad);
     }
 
     public int getNumFactura() {
@@ -37,11 +41,11 @@ public class Factura {
         this.numFactura = numFactura;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -49,7 +53,7 @@ public class Factura {
         return items;
     }
 
-    public void agregarItemFactura(Articulo articulo, int cantidad) throws ArticuloRepetidoException, StockInsuficienteException {
+    public void agregarItem(Articulo articulo, int cantidad) throws ArticuloRepetidoException, StockInsuficienteException {
         ItemFactura fac = new ItemFactura(articulo, cantidad);
         boolean contiene = false;
         for (ItemFactura factos : items){
@@ -64,10 +68,11 @@ public class Factura {
         items.add(new ItemFactura(articulo, cantidad));
     }
 
+
 }
      class ItemFactura {
         private int cantidadVendida;
-        private float precio;
+        private double precio;
         private Articulo articulo;
 
         public ItemFactura(Articulo articulo, int cantidadVendida) {
@@ -84,7 +89,7 @@ public class Factura {
             this.cantidadVendida = cantidadVendida;
         }
 
-        public float getPrecio() {
+        public double getPrecio() {
             return precio;
         }
 

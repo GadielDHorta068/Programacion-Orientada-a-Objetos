@@ -3,11 +3,11 @@ package org.deneb.tp1.ejercicio3;
 public class Cliente {
     private int codigo;
     private String nombre;
-    private int cuil;
-    private int telefono;
+    private String cuil;
+    private String telefono;
     private String direccion;
 
-    public Cliente(int codigo, String nombre, int cuil, int telefono, String direccion) {
+    public Cliente(int codigo, String nombre, String cuil, String telefono, String direccion) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.cuil = cuil;
@@ -31,19 +31,19 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public int getCuil() {
+    public String getCuil() {
         return cuil;
     }
 
-    public void setCuil(int cuil) {
+    public void setCuil(String cuil) {
         this.cuil = cuil;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

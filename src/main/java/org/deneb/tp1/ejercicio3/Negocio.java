@@ -1,17 +1,27 @@
 package org.deneb.tp1.ejercicio3;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Negocio {
 
-    List<Articulo> stock = new ArrayList<Articulo>();
-    List<Factura> facturas = new ArrayList<Factura>();
+    private String cuil;
+    private String nombre;
+
+    List<Articulo> stock = new ArrayList<>();
+    List<Factura> facturas = new ArrayList<>();
+
+
+    public Negocio(String cuil, String nombre) {
+        this.cuil = cuil;
+        this.nombre = nombre;
+    }
+
     /**
      * Cambia en un porcentaje el precio de todos los artículos del stock
      *
-     * @param porcCambio: porcentaje de cambio de precio
+     * @param porcCambio: porcentaje de cambios de precio
      *
      */
     public void cambiarPrecio(double porcCambio){
@@ -27,26 +37,66 @@ public class Negocio {
      * @return stock valorizado
      */
     public double stockValorizado(){
-        float valor = 0;
+        double valor = 0;
         for (Articulo e : stock){
             valor += e.getPrecio();
         }
         return valor;
     }
 
-    public double totalFacturadoEntre(Date inicio, Date fin){
+    public Articulo agregarArticulo(int i, String destornillador, double v, int i1) {
+        Articulo art = new Articulo(i,destornillador,v, i1);
+        stock.add(art);
+        return art;
+    }
+
+    public Cliente agregarCliente(int i, String juan, String s, String s1, String s2) {
+        return new Cliente(i,juan,s,s1,s2);
+    }
+
+    public Factura agregarFactura(int i, LocalDate of, Articulo des, int i1) throws StockInsuficienteException, ArticuloRepetidoException {
+        return new Factura(i, of, des, i1);
+    }
+
+    public double totalFacturado(LocalDate of, LocalDate of1) {
         double auxiliar = 0;
         for(Factura e: facturas){
-          //  if(inicio >e.getFecha() > fin){
-                for(ItemFactura item : e.getItems()){
-                    auxiliar += item.getPrecio();
-                }
-          //  }
+             if(e.getFecha().isEqual(of) || e.getFecha().isAfter(of) && e.getFecha().isEqual(of1) || e.getFecha().isBefore(of1)){
+            for(ItemFactura item : e.getItems()){
+                auxiliar += item.getPrecio();
+            }
+            }
         }
         return auxiliar;
     }
 
-    public double totalFechaCliente(Cliente cliente, Date inicio, Date fin){
+    public double totalFacturadoCtaCte(LocalDate of, LocalDate of1) {
+        double auxiliar = 0;
+        for(Factura e: facturas){
+            if(e.getFecha().isEqual(of) || e.getFecha().isAfter(of) && e.getFecha().isEqual(of1) || e.getFecha().isBefore(of1)){
+                for(ItemFactura item : e.getItems()){
+                    auxiliar += item.getPrecio();
+                }
+            }
+        }
+        return auxiliar;
+    }
+
+    public double totalFacturadoClienteCtaCte(LocalDate of, LocalDate of1, Cliente cliente) {
+        double auxiliar = 0;
+        for(Factura e: facturas){
+            if (e.getCliente().equals(cliente)){
+                if(e.getFecha().isEqual(of) || e.getFecha().isAfter(of) && e.getFecha().isEqual(of1) || e.getFecha().isBefore(of1)){
+                    for(ItemFactura item : e.getItems()){
+                        auxiliar += item.getPrecio();
+                    }
+                }
+            }
+        }
+        return auxiliar;
+    }
+
+    public double totalFacturadoCliente(LocalDate of, LocalDate of1, Cliente cliente) {
         List<ItemFactura> aux = new ArrayList<>();
         double auxiliar = 0;
         for(Factura e: facturas){
@@ -57,5 +107,14 @@ public class Negocio {
             }
         }
         return auxiliar;
+    }
+
+    public Factura agregarFactura(int numero, LocalDate fecha, Cliente cliente, Articulo articulo, int cantidad, boolean ctaCte) throws StockInsuficienteException, ArticuloRepetidoException, ClienteNuloException {
+        if (cliente == null) {
+            throw new ClienteNuloException("El cliente no puede ser nulo");
+        }
+        Factura factura = new Factura(numero, fecha, cliente, articulo, cantidad, ctaCte);
+        facturas.add(factura);
+        return factura;
     }
 }

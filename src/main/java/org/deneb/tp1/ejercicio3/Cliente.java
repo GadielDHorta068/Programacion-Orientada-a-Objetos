@@ -1,5 +1,7 @@
 package org.deneb.tp1.ejercicio3;
 
+import java.util.Objects;
+
 public class Cliente {
     private int codigo;
     private String nombre;
@@ -15,14 +17,6 @@ public class Cliente {
         this.direccion = direccion;
     }
 
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -31,27 +25,27 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getCuil() {
-        return cuil;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return codigo == cliente.codigo && Objects.equals(cuil, cliente.cuil);
     }
 
-    public void setCuil(String cuil) {
-        this.cuil = cuil;
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo, cuil);
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", cuil='" + cuil + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                '}';
     }
 }

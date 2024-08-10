@@ -2,15 +2,10 @@ package org.deneb.tp1.ejercicio5;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
-import java.util.List;
-
-import org.deneb.tp1.ejercicio5.modelo.*;
+import java.util.List;import org.deneb.tp1.ejercicio5.modelo.*;
 import org.junit.Before;
 import org.junit.Test;
-
-//Test ejercicio 15
 
 public class JunitTestFacultadEje5 {
 
@@ -92,5 +87,4 @@ public class JunitTestFacultadEje5 {
 	public void cantidadAlumnosPorMateria() {
 		assertEquals(2, mifacultad.cantidadAlumnosPorMateria(materia1));
 	}
-
 }

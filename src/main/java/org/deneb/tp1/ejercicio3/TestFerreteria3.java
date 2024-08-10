@@ -9,14 +9,14 @@ import org.junit.Test;
 
 public class TestFerreteria3 {
 
-	private Negocio ferreteria = new Negocio("30-37148498-8", "Ferreteria");
+	private final Negocio ferreteria = new Negocio("30-37148498-8", "Ferreteria");
 
 	private Articulo des, mar, pin;
 	private Cliente cliente1, cliente2;
 	private Factura factura1, factura2, factura3, factura4;
 
 	@Before
-	public void antesDelTest() throws StockInsuficienteException, ArticuloRepetidoException, StockInsuficienteException, ArticuloRepetidoException, ClienteNuloException {
+	public void antesDelTest() throws StockInsuficienteException, ArticuloRepetidoException, ClienteNuloException {
 		
 		des = ferreteria.agregarArticulo(10010, "destornillador", 150.20, 30);
 		mar = ferreteria.agregarArticulo(10020, "martillo", 250.00, 20);
@@ -45,7 +45,7 @@ public class TestFerreteria3 {
 
 	
 	@Test(expected = ClienteNuloException.class)
-	public void ventaCtaCteSinCliente() throws StockInsuficienteException, ClienteNuloException, StockInsuficienteException, ArticuloRepetidoException, StockInsuficienteException {
+	public void ventaCtaCteSinCliente() throws ClienteNuloException,ArticuloRepetidoException, StockInsuficienteException {
 		ferreteria.agregarFactura(104,LocalDate.of(2022, 8, 5), null, mar, 2, true);
 	}
 	

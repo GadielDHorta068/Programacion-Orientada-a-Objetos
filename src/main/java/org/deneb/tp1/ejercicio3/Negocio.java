@@ -26,7 +26,9 @@ public class Negocio {
      */
     public void cambiarPrecio(double porcCambio){
         for (Articulo e : stock){
-            e.setPrecio((float) ((e.getPrecio()/100) * porcCambio));
+            double precioActual = e.getPrecio();
+            double nuevoPrecio =  precioActual * (1 + porcCambio) * 0.1;
+            e.setPrecio(nuevoPrecio);
         }
     }
 
@@ -39,7 +41,7 @@ public class Negocio {
     public double stockValorizado(){
         double valor = 0;
         for (Articulo e : stock){
-            valor += e.getPrecio();
+            valor += e.getPrecio() * e.getCantidad();
         }
         return valor;
     }
@@ -58,27 +60,28 @@ public class Negocio {
         return new Factura(i, of, des, i1);
     }
 
-    public double totalFacturado(LocalDate of, LocalDate of1) {
-        double auxiliar = 0;
-        for(Factura e: facturas){
-             if(e.getFecha().isEqual(of) || e.getFecha().isAfter(of) && e.getFecha().isEqual(of1) || e.getFecha().isBefore(of1)){
-            for(ItemFactura item : e.getItems()){
-                auxiliar += item.getPrecio();
-            }
+    public double totalFacturado(LocalDate of, LocalDate to) {
+        double aux = 0;
+        for (Factura e : facturas) {
+            LocalDate fecha = e.getFecha();
+            if ((fecha.isEqual(of) || fecha.isAfter(of)) && (fecha.isEqual(to) || fecha.isBefore(to))) {
+                aux += e.importe();
             }
         }
-        return auxiliar;
+        return aux;
     }
 
     public double totalFacturadoCtaCte(LocalDate of, LocalDate of1) {
         double auxiliar = 0;
         for(Factura e: facturas){
-            if(e.getFecha().isEqual(of) || e.getFecha().isAfter(of) && e.getFecha().isEqual(of1) || e.getFecha().isBefore(of1)){
-                for(ItemFactura item : e.getItems()){
-                    auxiliar += item.getPrecio();
+            if(e.isCtaCte()){
+                if(e.getFecha().isEqual(of) || e.getFecha().isAfter(of) && e.getFecha().isEqual(of1) || e.getFecha().isBefore(of1)){
+                    for(ItemFactura item : e.getItems()){
+                        auxiliar += item.getPrecio();
+                    }
                 }
             }
-        }
+            }
         return auxiliar;
     }
 

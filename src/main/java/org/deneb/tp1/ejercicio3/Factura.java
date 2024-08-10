@@ -12,6 +12,10 @@ public class Factura {
     private List<ItemFactura> items;
     private Cliente cliente;
 
+    public boolean isCtaCte() {
+        return ctaCte;
+    }
+
     public Factura(int numero, LocalDate fecha, Cliente cliente, Articulo articulo, int cantidad, boolean ctaCte) throws StockInsuficienteException, ArticuloRepetidoException {
         this.fecha = fecha;
         items = new ArrayList<>();
@@ -51,6 +55,14 @@ public class Factura {
 
     public List<ItemFactura> getItems(){
         return items;
+    }
+
+    public double importe(){
+        double aux = 0;
+        for (ItemFactura item : items){
+            aux += item.getPrecio() * item.getCantidadVendida();
+        }
+        return aux;
     }
 
     public void agregarItem(Articulo articulo, int cantidad) throws ArticuloRepetidoException, StockInsuficienteException {

@@ -1,12 +1,12 @@
-package org.deneb.tp1.ejercicio5;
+package org.deneb.tp1.ejercicio5.modelo;
 
 public class DatosPersonal {
     private String calle;
     private String ciudad;
-    private int telefono;
+    private String telefono;
     private String email;
 
-    public DatosPersonal(String calle, String ciudad, int telefono, String email) {
+    public DatosPersonal(String calle, String ciudad, String telefono, String email) {
         this.calle = calle;
         this.ciudad = ciudad;
         this.telefono = telefono;
@@ -29,11 +29,11 @@ public class DatosPersonal {
         this.ciudad = ciudad;
     }
 
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

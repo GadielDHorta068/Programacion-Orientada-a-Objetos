@@ -14,6 +14,11 @@ public class Materia {
         correlativas = new ArrayList<>();
     }
 
+    /**
+     * Materia correlativa a esta
+     * @param materia
+     * @throws MateriaRepetidaException
+     */
     public void agregarCorrelativa(Materia materia) throws MateriaRepetidaException{
         if (correlativas.contains(materia)){
             throw new MateriaRepetidaException("Materia repetida");

@@ -28,14 +28,11 @@ public class Profesor {
         this.datos = new DatosPersonal(calle,ciudad, number, mail );
     }
 
-    public String getNombre() {
-        return Nombre;
-    }
-
-    public void setNombre(String nombre) {
-        Nombre = nombre;
-    }
-
+    /**
+     * Agregar una materia al profesor
+     * @param materia Materia a ser agregada
+     * @throws MateriaRepetidaException
+     */
     public void agregarMateria(Materia materia) throws MateriaRepetidaException {
         if (materias.contains(materia)){
             throw new MateriaRepetidaException("Materia Repetida");

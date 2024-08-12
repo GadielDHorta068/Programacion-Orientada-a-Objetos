@@ -18,23 +18,20 @@ public class Alumno {
         materias = new ArrayList<>();
     }
 
-    public Alumno(int legajo, String nombre, String apellido, Materia materia, String calle, String ciudad, String number, String mail) throws MateriaRepetidaException {
-        this.legajo = legajo;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.materias = new ArrayList<>();
-        agregarMateria(materia);
-        this.datos = new DatosPersonal(calle,ciudad, number, mail);
-    }
 
     public Alumno(int i, String nombre, String apellido, String calle, String ciudad, String number, String mail) {
-        this.legajo = legajo;
+        this.legajo = i;
         this.nombre = nombre;
         this.apellido = apellido;
         this.materias = new ArrayList<>();
         this.datos = new DatosPersonal(calle,ciudad, number, mail);
     }
 
+    /**
+     * Materia que cursa el alumno
+     * @param mate Materia que cursa el alumno
+     * @throws MateriaRepetidaException Excepcion lanzada en caso de que una materia este repetida
+     */
     public void agregarMateria(Materia mate) throws MateriaRepetidaException {
         if (materias.contains(mate)){
             throw new MateriaRepetidaException("Materia repetida");

@@ -26,19 +26,6 @@ public class Cliente {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cliente cliente = (Cliente) o;
-        return codigo == cliente.codigo && Objects.equals(cuil, cliente.cuil);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(codigo, cuil);
-    }
-
-    @Override
     public String toString() {
         return "Cliente{" +
                 "codigo=" + codigo +
@@ -47,5 +34,18 @@ public class Cliente {
                 ", telefono='" + telefono + '\'' +
                 ", direccion='" + direccion + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return codigo == cliente.codigo && Objects.equals(nombre, cliente.nombre) && Objects.equals(cuil, cliente.cuil) && Objects.equals(telefono, cliente.telefono) && Objects.equals(direccion, cliente.direccion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codigo, nombre, cuil, telefono, direccion);
     }
 }

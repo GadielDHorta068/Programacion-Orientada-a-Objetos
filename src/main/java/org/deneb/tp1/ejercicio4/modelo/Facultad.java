@@ -34,8 +34,8 @@ public class Facultad {
         if (materias.contains(mate)) {
             throw new MateriaRepetidaException("Materia Repetida");
         }
-        materias.addLast(mate);
-        return materias.getLast();
+        materias.add(mate);
+        return mate;
     }
 
     public Profesor agregarProfesor(int i, String nombre, String apellido, Materia materia) throws ProfesorRepetidoException, MateriaRepetidaException {

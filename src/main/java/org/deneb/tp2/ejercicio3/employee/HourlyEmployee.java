@@ -1,17 +1,19 @@
-package employee;
+package org.deneb.tp2.ejercicio3.employee;
 // Fig. 10.6: HourlyEmployee.java
 // HourlyEmployee class extends Employee.
 
-public class HourlyEmployee extends Employee 
+import java.time.LocalDate;
+
+public class HourlyEmployee extends Employee
 {
    private double wage; // wage per hour
    private double hours; // hours worked for week
 
    // five-argument constructor
-   public HourlyEmployee( String first, String last, String ssn, 
-      double hourlyWage, double hoursWorked )
+   public HourlyEmployee(String first, String last, String ssn,
+                         double hourlyWage, double hoursWorked, LocalDate localDate)
    {
-      super( first, last, ssn );
+      super( first, last, ssn ,localDate);
       setWage( hourlyWage ); // validate and store hourly wage
       setHours( hoursWorked ); // validate and store hours worked
    } // end five-argument HourlyEmployee constructor

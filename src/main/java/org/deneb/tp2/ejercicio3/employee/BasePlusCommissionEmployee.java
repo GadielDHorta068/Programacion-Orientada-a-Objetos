@@ -1,16 +1,18 @@
-package employee;
+package org.deneb.tp2.ejercicio3.employee;
 // Fig. 10.8: BasePlusCommissionEmployee.java
 // BasePlusCommissionEmployee class extends CommissionEmployee.
 
-public class BasePlusCommissionEmployee extends CommissionEmployee 
+import java.time.LocalDate;
+
+public class BasePlusCommissionEmployee extends CommissionEmployee
 {
    private double baseSalary; // base salary per week
 
    // six-argument constructor
-   public BasePlusCommissionEmployee( String first, String last, 
-      String ssn, double sales, double rate, double salary )
+   public BasePlusCommissionEmployee(String first, String last,
+                                     String ssn, double sales, double rate, double salary, LocalDate localDate)
    {
-      super( first, last, ssn, sales, rate );
+      super( first, last, ssn, sales, rate, localDate);
       setBaseSalary( salary ); // validate and store base salary
    } // end six-argument BasePlusCommissionEmployee constructor
 

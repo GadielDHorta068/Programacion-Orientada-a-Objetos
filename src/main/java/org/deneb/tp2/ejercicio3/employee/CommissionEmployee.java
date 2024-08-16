@@ -1,17 +1,19 @@
-package employee;
+package org.deneb.tp2.ejercicio3.employee;
 // Fig. 10.7: CommissionEmployee.java
 // CommissionEmployee class extends Employee.
 
-public class CommissionEmployee extends Employee 
+import java.time.LocalDate;
+
+public class CommissionEmployee extends Employee
 {
    private double grossSales; // gross weekly sales
    private double commissionRate; // commission percentage
 
    // five-argument constructor
-   public CommissionEmployee( String first, String last, String ssn, 
-      double sales, double rate )
+   public CommissionEmployee(String first, String last, String ssn,
+                             double sales, double rate, LocalDate localDate)
    {
-      super(first,last,ssn);
+      super(first,last,ssn,localDate);
       setGrossSales( sales );
       setCommissionRate( rate );
    } // end five-argument CommissionEmployee constructor

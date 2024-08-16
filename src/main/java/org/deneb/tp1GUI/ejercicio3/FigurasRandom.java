@@ -29,7 +29,7 @@ public class FigurasRandom extends JPanel {
         int height = getHeight();
 
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             boolean drawRectangle = random.nextBoolean();
 
             int red = random.nextInt(256);

@@ -1,16 +1,18 @@
-package employee;
+package org.deneb.tp2.ejercicio3.employee;
 // Fig. 10.5: SalariedEmployee.java
 // SalariedEmployee class extends Employee.
 
-public class SalariedEmployee extends Employee 
+import java.time.LocalDate;
+
+public class SalariedEmployee extends Employee
 {
    private double weeklySalary;
 
    // four-argument constructor
-   public SalariedEmployee( String first, String last, String ssn, 
-      double salary )
+   public SalariedEmployee(String first, String last, String ssn,
+                           double salary, LocalDate localDate)
    {
-      super( first, last, ssn ); // pass to Employee constructor
+      super( first, last, ssn ,localDate); // pass to Employee constructor
       setWeeklySalary( salary ); // validate and store salary
    } // end four-argument SalariedEmployee constructor
 

@@ -1,21 +1,45 @@
-package employee;
+package org.deneb.tp2.ejercicio3.employee;
 // Fig. 10.4: Employee.java
 // Employee abstract superclass.
 
-public abstract class Employee 
+import java.time.LocalDate;
+
+public abstract class Employee
 {
    private String firstName;
    private String lastName;
    private String socialSecurityNumber;
+   private LocalDate birthDate;
+   static private float additional;
 
    // three-argument constructor
-   public Employee( String first, String last, String ssn )
+   public Employee(String first, String last, String ssn)
    {
       firstName = first;
       lastName = last;
       socialSecurityNumber = ssn;
    } // end three-argument Employee constructor
 
+
+   // five-argument constructor
+   public Employee( String first, String last, String ssn, LocalDate cumple,float adicional )
+   {
+      firstName = first;
+      lastName = last;
+      socialSecurityNumber = ssn;
+      this.birthDate = cumple;
+      additional = adicional;
+   } // end five-argument Employee constructor
+
+
+
+   public double salary(LocalDate date) {
+      double baseSalary = 0;
+      if (date.getMonth() == birthDate.getMonth()) {
+         return baseSalary + additional;
+      }
+      return baseSalary;
+   }
    // set first name
    public void setFirstName( String first )
    {

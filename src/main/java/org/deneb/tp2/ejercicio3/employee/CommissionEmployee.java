@@ -11,7 +11,7 @@ public class CommissionEmployee extends Employee
    public CommissionEmployee( String first, String last, String ssn, 
       double sales, double rate )
    {
-      super( first, last, ssn );
+      super(first,last,ssn);
       setGrossSales( sales );
       setCommissionRate( rate );
    } // end five-argument CommissionEmployee constructor

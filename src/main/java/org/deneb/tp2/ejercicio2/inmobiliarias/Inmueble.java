@@ -1,7 +1,7 @@
 // Inmueble.java
 package org.deneb.tp2.ejercicio2.inmobiliarias;
 
-public abstract class Inmueble {
+public class Inmueble {
 
 	private String domicilio;
 	private double superficie;
@@ -113,6 +113,9 @@ public abstract class Inmueble {
 	}
 	
 	// nuevo m�todo:
-	public abstract double comisionVendedor( );
+	public double comisionVendedor( ){
+			return 0;
+
+	}
 
 }

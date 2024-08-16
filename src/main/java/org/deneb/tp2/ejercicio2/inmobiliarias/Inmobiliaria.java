@@ -1,18 +1,20 @@
 // Inmobiliaria.java
 package org.deneb.tp2.ejercicio2.inmobiliarias;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Inmobiliaria {
-	private String nombre;
+	private final String nombre;
 	private int cantidadInmuebles;
-	private final int maximoInmuebles = 100;
-	private Inmueble[ ] inmuebles;
-	private double comisionClienteCompra;	// atributo nuevo
-	private double comisionClienteVenta;		// atributo nuevo
+    private List<Inmueble> inmuebles;
+	private final double comisionClienteCompra;	// atributo nuevo
+	private final double comisionClienteVenta;		// atributo nuevo
 		
 	public Inmobiliaria (String nombre,
  			double comisionClienteCompra, double comisionClienteVenta) {
 		this.nombre = nombre;
-		this.inmuebles = null;
+		this.inmuebles = new ArrayList<>(cantidadInmuebles);
 		this.cantidadInmuebles = 0;
 		// se agregaron dos l�neas:
 		this.comisionClienteCompra = comisionClienteCompra;
@@ -28,13 +30,14 @@ public class Inmobiliaria {
 	}
 		
 	public void agregarInmueble (Inmueble x) {
-		if (cantidadInmuebles == maximoInmuebles) {
+        int maximoInmuebles = 100;
+        if (cantidadInmuebles == maximoInmuebles) {
 			System.out.println ("Se super� el m�ximo de inmuebles para esta inmobiliaria");
 			return;
 		}
-		if (inmuebles == null)
-			inmuebles = new Inmueble [maximoInmuebles];
-		inmuebles [cantidadInmuebles] = x;
+		if (inmuebles.isEmpty())
+			inmuebles = new ArrayList<>(maximoInmuebles);
+		inmuebles.addLast(x);
 		cantidadInmuebles++;
 	}
 
@@ -42,7 +45,7 @@ public class Inmobiliaria {
 		if (inmuebles == null)
 			return -1;
 		for (int pos = 0; pos < cantidadInmuebles; pos++)
-			if (inmuebles[pos] == x)
+			if (inmuebles.get(pos) == x)
 				return pos;
 		return -1;
 	}
@@ -52,9 +55,9 @@ public class Inmobiliaria {
 		if (pos > -1) {	// encontr� el inmueble
 			// voy a eliminar el elemento del arreglo por compresi�n
 			for (int i = pos; i < cantidadInmuebles-1; i++) {
-				inmuebles[i] = inmuebles [i+1];
+				inmuebles.set(i, inmuebles.get(i + 1));
 			}
-			inmuebles [cantidadInmuebles-1] = null;
+			inmuebles.set(cantidadInmuebles - 1, null);
 			cantidadInmuebles--;
 		}
 	}
@@ -63,7 +66,7 @@ public class Inmobiliaria {
 		System.out.println ("Inmobiliaria: " + this.getNombre( ));
 		if (inmuebles != null)
 			for (int i = 0; i < cantidadInmuebles; i++)
-				inmuebles[i].imprimirDatos( );
+				inmuebles.get(i).imprimirDatos( );
 		System.out.println( );
 	}
 
@@ -83,10 +86,10 @@ public class Inmobiliaria {
 		double comisionesCobradas =
  			(getComisionClienteCompra( ) + getComisionClienteVenta( )) / 100.0;
 		for (int i = 0; i < cantidadInmuebles; i++) {
-			int precio = inmuebles[i].getPrecio( );
-			if (!inmuebles[i].getVendido( )) {
+			int precio = inmuebles.get(i).getPrecio( );
+			if (!inmuebles.get(i).getVendido( )) {
 				beneficio += precio * comisionesCobradas
- 						- inmuebles[i].comisionVendedor( );
+ 						- inmuebles.get(i).comisionVendedor( );
 			}
 		}
 		return beneficio;
@@ -98,10 +101,10 @@ public class Inmobiliaria {
 		double comisionesCobradas =
  			(getComisionClienteCompra( ) + getComisionClienteVenta( )) / 100.0;
 		for (int i = 0; i < cantidadInmuebles; i++) {
-			int precio = inmuebles[i].getPrecio( );
-			if (!inmuebles[i].getVendido( ) && inmuebles[i].getReservado( )) {
+			int precio = inmuebles.get(i).getPrecio( );
+			if (!inmuebles.get(i).getVendido( ) && inmuebles.get(i).getReservado( )) {
 				beneficio += precio * comisionesCobradas
- 						- inmuebles[i].comisionVendedor( );
+ 						- inmuebles.get(i).comisionVendedor( );
 			}
 		}
 		return beneficio;

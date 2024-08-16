@@ -3,6 +3,7 @@ package org.deneb.tp1.ejercicio4.modelo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Alumno {
     private int legajo;
@@ -30,5 +31,18 @@ public class Alumno {
             throw new MateriaRepetidaException("Materia repetida");
         }
         materias.addLast(mate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Alumno alumno = (Alumno) o;
+        return legajo == alumno.legajo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(legajo);
     }
 }

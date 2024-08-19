@@ -1,4 +1,4 @@
-package carlosfontela.cuentas;
+package org.deneb.tp2.ejercicio5.cuentas;
 
 public class Empresa extends Cliente {
 	

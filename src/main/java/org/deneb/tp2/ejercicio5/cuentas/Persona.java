@@ -1,4 +1,6 @@
-package carlosfontela.cuentas;
+package org.deneb.tp2.ejercicio5.cuentas;
+
+import org.deneb.tp2.ejercicio5.cuentas.Cliente;
 
 public class Persona extends Cliente {
 

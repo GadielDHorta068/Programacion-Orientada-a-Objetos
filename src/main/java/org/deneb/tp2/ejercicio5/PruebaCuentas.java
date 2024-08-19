@@ -1,7 +1,9 @@
-package carlosfontela.pruebas;
+package org.deneb.tp2.ejercicio5;
 
 import junit.framework.TestCase;
-import carlosfontela.cuentas.*;
+import org.deneb.tp2.ejercicio5.cuentas.*;
+import org.deneb.tp2.ejercicio5.cuentas.Cliente;
+import org.deneb.tp2.ejercicio5.cuentas.CuentaBancaria;
 
 public class PruebaCuentas extends TestCase {
 

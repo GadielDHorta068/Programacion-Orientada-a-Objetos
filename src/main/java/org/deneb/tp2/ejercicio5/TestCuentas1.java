@@ -1,9 +1,11 @@
-package carlosfontela.pruebas;
+package org.deneb.tp2.ejercicio5;
 
 import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import carlosfontela.cuentas.Empresa;
-import carlosfontela.cuentas.Persona;
+import org.deneb.tp2.ejercicio5.cuentas.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 class TestCuentas1 {
 
@@ -17,11 +19,12 @@ class TestCuentas1 {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		juan = new Persona("Juan", "Pérez", 5122122, "Lima", 444, "Belgrano", "Venezuela", "C1000AAA", "01140101010",
+		juan = new Persona("Juan", "Pï¿½rez", 5122122, "Lima", 444, "Belgrano", "Venezuela", "C1000AAA", "01140101010",
 				"juan@perez.com.ar");
-		ines = new Persona("Inés", "García", 4011011, "Cerrito", 1111, "Santa Fe", "Arenales", "C1111ZZZ",
-				"01140001111", "ines@garcia.com.ar");
-		empresa = new Empresa("Luna Nueva S.A.", "1701234562", "Freire", 8888, "Dorrego", "Concepción Arenal",
+		ines = new Persona("Inï¿½s", "Garcï¿½a", 4011011, "Cerrito", 1111, "Santa Fe", "Arenales", "C1111ZZZ",
+				"01140001111", "ines@garcia.com.ar") {
+		};
+		empresa = new Empresa("Luna Nueva S.A.", "1701234562", "Freire", 8888, "Dorrego", "Concepciï¿½n Arenal",
 				"C0000YYY", "01199991000", "info@empresa.com.ar");
 		cajaAhorro1 = new CajaAhorro(1234, juan);
 		cajaAhorro2 = new CajaAhorro(5678, ines);

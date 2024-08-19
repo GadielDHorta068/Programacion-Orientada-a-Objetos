@@ -1,5 +1,6 @@
 package org.deneb.tp2.ejercicio5.cuentas;
 import org.deneb.tp2.ejercicio5.cuentas.CuentaBancaria;
+
 public abstract class CuentaBancaria {
 
 	private int numero;
@@ -13,7 +14,7 @@ public abstract class CuentaBancaria {
 			this.titular = titular;
 			this.saldo = 0;
 		}
-		// veremos el significado de lo que sigue en un capítulo posterior:
+		// veremos el significado de lo que sigue en un capÃ­tulo posterior:
 		else throw new IllegalArgumentException( );
 	}
 
@@ -37,13 +38,6 @@ public abstract class CuentaBancaria {
 		saldo += monto;
 	}
 
-	public boolean extraer (double monto) {
-		if (monto > saldo)
-			return false;
-		else {
-			saldo -= monto;
-			return true;
-		}
-	}
-	public abstract void extraer(){}
+	public abstract boolean extraer(double monto);
+
 }

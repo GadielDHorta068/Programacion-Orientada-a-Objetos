@@ -1,5 +1,5 @@
 package org.deneb.tp2.ejercicio5.cuentas;
-import carlosfontela.cuentas.Cliente;
+import org.deneb.tp2.ejercicio5.cuentas.Cliente;
 public class CajaAhorro extends CuentaBancaria {
 	
 	private double interesesGanados;
@@ -10,8 +10,13 @@ public class CajaAhorro extends CuentaBancaria {
 	}
 
 	@Override
-	public void extraer() {
-
+	public boolean extraer( double monto) {
+		if (monto > super.getSaldo())
+			return false;
+		else {
+			super.setSaldo(getSaldo() -monto);
+			return true;
+		}
 	}
 
 	public double getInteresesGanados ( ) {

@@ -1,8 +1,5 @@
 package org.deneb.tp2.ejercicio5.cuentas;
 
-import org.deneb.tp2.ejercicio5.cuentas.CuentaBancaria;
-import carlosfontela.cuentas.Cliente;
-
 public class CuentaCorriente extends CuentaBancaria {
 
 	private double descubierto;
@@ -17,18 +14,14 @@ public class CuentaCorriente extends CuentaBancaria {
 		this.descubierto = 0;
 	}
 
-	public boolean extraer (double monto) {
-		if (monto > getSaldo() + descubierto)
+	@Override
+	public boolean extraer( double monto) {
+		if (monto > super.getSaldo())
 			return false;
 		else {
-			setSaldo ( getSaldo() - monto );
+			super.setSaldo(getSaldo() -monto);
 			return true;
 		}
-	}
-
-	@Override
-	public void extraer() {
-
 	}
 
 	public double getDescubierto ( ) {

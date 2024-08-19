@@ -6,9 +6,9 @@ import java.awt.*;
 import java.util.List;
 
 public class PanelDibujo {
-    public PanelDibujo(List<Figura> figuras){
+    public PanelDibujo(List<Figura> figuras, Graphics g){
         for (Figura f : figuras){
-            f.dibujar();
+            f.dibujar(g);
         }
     }
 }

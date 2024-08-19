@@ -14,7 +14,7 @@ public abstract class CuentaBancaria {
 			this.titular = titular;
 			this.saldo = 0;
 		}
-		// veremos el significado de lo que sigue en un capÃ­tulo posterior:
+		// veremos el significado de lo que sigue en un capítulo posterior:
 		else throw new IllegalArgumentException( );
 	}
 

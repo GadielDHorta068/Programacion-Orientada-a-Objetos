@@ -1,4 +1,4 @@
-package org.deneb.tp2.ejercicio4.geometria;
+package org.deneb.tp2GUI.ejercicio3.geometria;
 
 public class Segmento {
 

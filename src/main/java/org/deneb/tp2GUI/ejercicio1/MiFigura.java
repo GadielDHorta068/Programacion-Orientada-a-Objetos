@@ -1,4 +1,4 @@
-package org.deneb.tp2GUI.ejercicio4;
+package org.deneb.tp2GUI.ejercicio1;
 
 import java.awt.*;
 

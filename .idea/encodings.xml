@@ -2,9 +2,19 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio4/geometria/Elipse.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio4/geometria/FiguraCompuesta.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio4/geometria/Poligono.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio4/geometria/Punto.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio4/geometria/Segmento.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio5/PruebaCuentas.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio5/cuentas/CuentaBancaria.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2/ejercicio5/eje25/carlosfontela/cuentas/CuentaBancaria.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2GUI/ejercicio3/geometria/Elipse.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2GUI/ejercicio3/geometria/FiguraCompuesta.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2GUI/ejercicio3/geometria/Poligono.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2GUI/ejercicio3/geometria/Punto.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/org/deneb/tp2GUI/ejercicio3/geometria/Segmento.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>

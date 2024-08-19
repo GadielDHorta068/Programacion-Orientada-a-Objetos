@@ -1,5 +1,5 @@
 // Elipse.java
-package carlosfontela.geometria;
+package org.deneb.tp2.ejercicio4.geometria;
 
 public class Elipse extends Figura {
 

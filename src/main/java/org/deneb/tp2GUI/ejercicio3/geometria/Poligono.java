@@ -1,15 +1,21 @@
 // Poligono.java
-package org.deneb.tp2.ejercicio4.geometria;
+package org.deneb.tp2GUI.ejercicio3.geometria;
+
+import java.awt.*;
 
 public class Poligono extends Figura {
 
-	private Punto[ ] contorno;
+	private final Punto[ ] contorno;
+	private boolean isRelleno;
+	private Color relleno;
 
 	public Poligono (Punto[ ] contorno) {
 		if (contorno.length < 3)
 			// veremos el significado de lo que sigue en un capítulo posterior:
 			throw new IllegalArgumentException( );
 		this.contorno = contorno;
+		isRelleno = false;
+		relleno = Color.black;
 	}
 
 	static protected double areaTrapecio (Punto p1, Punto p2) {
@@ -19,10 +25,10 @@ public class Poligono extends Figura {
 	public int numeroLados( ) {
 		return contorno.length;
 	}
-	
+
 	public double area ( ) {
 		double superficie =
-			areaTrapecio (contorno [numeroLados( )-1], contorno[0]); 
+			areaTrapecio (contorno [numeroLados( )-1], contorno[0]);
 		for (int i = 0; i < numeroLados( )-1; i++)
 			superficie += areaTrapecio (contorno[i], contorno[i+1]);
 		return superficie;
@@ -34,11 +40,11 @@ public class Poligono extends Figura {
 			longitud += contorno[i].distancia (contorno[i+1]);
 		return longitud;
 	}
-	
+
 	private Segmento lado (int i) {
 		if (i < numeroLados( )-1)
-			return new Segmento (contorno[i], contorno[i+1]);
-		else return new Segmento (contorno[i], contorno[0]);
+			return new Segmento(contorno[i], contorno[i+1]);
+		else return new Segmento(contorno[i], contorno[0]);
 	}
 
 	// verifica si es un polígono con todos sus lados iguales
@@ -49,7 +55,7 @@ public class Poligono extends Figura {
 		}
 		return true;
 	}
-	
+
 	public String tipo( ) {
 		if (numeroLados( ) == 3 && regular( ))
 			return "triángulo equilátero";
@@ -66,7 +72,7 @@ public class Poligono extends Figura {
 			case 9 : nombre = "nonágono"; break;
 			case 10 : nombre = "decágono"; break;
 			case 12 : nombre = "dodecágono"; break;
-			case 20 : nombre = "icoságono"; break; 
+			case 20 : nombre = "icoságono"; break;
 			default : nombre = "sin nombre";
 		}
 		if (regular( ))
@@ -79,4 +85,46 @@ public class Poligono extends Figura {
 			contorno[i].trasladar (deltaX, deltaY);
 	}
 
+	@Override
+	public void setColor(Color color) {
+		relleno = color;
+	}
+
+	public boolean isRelleno() {
+		return isRelleno;
+	}
+
+	public void setRelleno(boolean relleno) {
+		isRelleno = relleno;
+	}
+
+	public Color getRelleno() {
+		return relleno;
+	}
+
+	public void setRelleno(Color relleno) {
+		this.relleno = relleno;
+	}
+
+	@Override
+	public void dibujar(Graphics g) {
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setColor(color);
+
+		int[] xPoints = new int[contorno.length];
+		int[] yPoints = new int[contorno.length];
+
+		for (int i = 0; i < contorno.length; i++) {
+			xPoints[i] = (int) contorno[i].getX();
+			yPoints[i] = (int) contorno[i].getY();
+		}
+
+		Polygon polygon = new Polygon(xPoints, yPoints, contorno.length);
+
+		if (isRelleno) {
+			g2d.fillPolygon(polygon);
+		} else {
+			g2d.drawPolygon(polygon);
+		}
+	}
 }

@@ -1,5 +1,7 @@
 // FiguraCompuesta.java
-package org.deneb.tp2.ejercicio4.geometria;
+package org.deneb.tp2GUI.ejercicio3.geometria;
+
+import java.awt.*;
 
 public class FiguraCompuesta extends Figura {
 
@@ -34,5 +36,14 @@ public class FiguraCompuesta extends Figura {
 	public void trasladar (double deltaX, double deltaY) {
 		for (int i = 0; i < componentes.length; i++)
 			componentes[i].trasladar (deltaX, deltaY);
+	}
+
+	@Override
+	public void dibujar(Graphics g) {
+
+	}
+
+	@Override
+	public void setColor(Color color) {
 	}
 }

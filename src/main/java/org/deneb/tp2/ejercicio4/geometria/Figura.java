@@ -1,5 +1,5 @@
 // Figura.java
-package carlosfontela.geometria;
+package org.deneb.tp2.ejercicio4.geometria;
 
 public abstract class Figura {
 	public abstract double area ( );

@@ -96,11 +96,7 @@ public class Factura {
 
     @Override
     public String toString() {
-        return "Factura{" +
-                "numFactura=" + numFactura +
-                ", fecha=" + fecha +
-                ", items=" + items +
-                '}';
+        return STR."Factura{numFactura=\{numFactura}, fecha=\{fecha}, items=\{items}\{'}'}";
     }
 
 

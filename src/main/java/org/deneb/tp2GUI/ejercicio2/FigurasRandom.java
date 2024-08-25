@@ -42,7 +42,7 @@ public class FigurasRandom extends JPanel {
             figuras[index++] = new MiRectangulo(x, y, width, height, color, relleno);
         }
 
-        JLabel statusBar = new JLabel(STR."Líneas: \{numLineas}, Óvalos: \{numOvalos}, Rectángulos: \{numRectangulos}");
+        JLabel statusBar = new JLabel(STR."Lineas: \{numLineas}, Ovalos: \{numOvalos}, Rectangulos: \{numRectangulos}");
         setLayout(new BorderLayout());
         add(statusBar, BorderLayout.SOUTH);
     }

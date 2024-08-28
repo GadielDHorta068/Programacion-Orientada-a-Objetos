@@ -15,17 +15,17 @@ public class PruebaCuentas extends TestCase {
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		juan = new Persona("Juan", "Pérez", 5122122, "Lima", 444, "Belgrano",
+		juan = new Persona ("Juan", "Pérez", 5122122, "Lima", 444, "Belgrano",
 					"Venezuela", "C1000AAA", "01140101010", "juan@perez.com.ar");
-		ines = new Persona("Inés", "García", 4011011, "Cerrito", 1111, "Santa Fe",
+		ines = new Persona ("Inés", "García", 4011011, "Cerrito", 1111, "Santa Fe",
 					"Arenales", "C1111ZZZ", "01140001111", "ines@garcia.com.ar");
-		empresa = new Empresa("Luna Nueva S.A.", "1701234562", "Freire", 8888,
+		empresa = new Empresa ("Luna Nueva S.A.", "1701234562", "Freire", 8888,
 					"Dorrego", "Concepción Arenal", "C0000YYY", "01199991000",
 					"info@empresa.com.ar");
-		cajaAhorro1 = new CajaAhorro(1234, juan);
-		cajaAhorro2 = new CajaAhorro(5678, ines);
-		cuentaCorriente1 = new CuentaCorriente(9012, ines, 0);
-		cuentaCorriente2 = new CuentaCorriente(3456, empresa, 2000);
+		cajaAhorro1 = new CajaAhorro (1234, juan);
+		cajaAhorro2 = new CajaAhorro (5678, ines);
+		cuentaCorriente1 = new CuentaCorriente (9012, ines, 0);
+		cuentaCorriente2 = new CuentaCorriente (3456, empresa, 2000);
 	}
 
 	public void test ( ) {

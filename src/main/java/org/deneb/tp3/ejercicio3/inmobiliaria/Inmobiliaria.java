@@ -1,28 +1,27 @@
 // Inmobiliaria.java
+
 package org.deneb.tp3.ejercicio3.inmobiliaria;
 
-import java.util.Iterator;
-
-public class Inmobiliaria implements Notificable{
+public class Inmobiliaria implements Notificable {
 	private String nombre;
 	private int cantidadInmuebles;
 	private final int maximoInmuebles = 100;
 	private Inmueble[ ] inmuebles;
-	private double comisionClienteCompra;	// atributo nuevo
-	private double comisionClienteVenta;		// atributo nuevo
+	private double comisionClienteCompra;
+	private double comisionClienteVenta;
 		
-	public Inmobiliaria (String nombre,
- 			double comisionClienteCompra, double comisionClienteVenta) {
+	public Inmobiliaria (String nombre, double comisionClienteCompra,
+ 							double comisionClienteVenta) {
 		this.nombre = nombre;
-		this.inmuebles = new Inmueble[maximoInmuebles];
+		this.inmuebles = null;
 		this.cantidadInmuebles = 0;
-		// se agregaron dos líneas:
 		this.comisionClienteCompra = comisionClienteCompra;
 		this.comisionClienteVenta = comisionClienteVenta;
 }
 		
+	// esta propiedad de Notificable ya estaba implementada:
 	public String getNombre( ) {
-		return nombre;
+			return nombre;
 	}
 		
 	public int getCantidadInmuebles( ) {
@@ -66,20 +65,17 @@ public class Inmobiliaria implements Notificable{
 		if (inmuebles != null)
 			for (int i = 0; i < cantidadInmuebles; i++)
 				inmuebles[i].imprimirDatos( );
-		System.out.println( );
+		System.out.println ( );
 	}
 
-	// nueva propiedad:
 	public double getComisionClienteCompra( ) {
-		return comisionClienteCompra;
+			return comisionClienteCompra;
 	}
 	
-	// nueva propiedad:
 	public double getComisionClienteVenta( ) {
-		return comisionClienteVenta;
+			return comisionClienteVenta;
 	}
 
-	// nuevo método:
 	public double beneficioEsperadoCartera( ) {
 		double beneficio = 0;
 		double comisionesCobradas =
@@ -87,29 +83,60 @@ public class Inmobiliaria implements Notificable{
 		for (int i = 0; i < cantidadInmuebles; i++) {
 			int precio = inmuebles[i].getPrecio( );
 			if (!inmuebles[i].getVendido( )) {
-				beneficio += precio * comisionesCobradas
- 						- inmuebles[i].comisionVendedor( );
+				beneficio += precio * comisionesCobradas -
+ 					inmuebles[i].comisionVendedor( );
 			}
+			System.out.println (beneficio);
 		}
 		return beneficio;
 	}
 
-	// nuevo método:
 	public double beneficioEsperadoReservados( ) {
 		double beneficio = 0;
 		double comisionesCobradas =
- 			(getComisionClienteCompra( ) + getComisionClienteVenta( )) / 100.0;
+ 			(getComisionClienteCompra( ) + getComisionClienteVenta( )) / 100;
 		for (int i = 0; i < cantidadInmuebles; i++) {
 			int precio = inmuebles[i].getPrecio( );
 			if (!inmuebles[i].getVendido( ) && inmuebles[i].getReservado( )) {
-				beneficio += precio * comisionesCobradas
- 						- inmuebles[i].comisionVendedor( );
+				beneficio += precio * comisionesCobradas -
+ 					inmuebles[i].comisionVendedor( );
 			}
 		}
 		return beneficio;
+	}
+	
+	// los 3 métodos que siguen de Notificable debieron implementarse:
+	public void avisarCambioPrecio (Inmueble x, int nuevoPrecio) {
+		String mensaje = "El inmueble " + x.getDomicilio( ) +
+ 		" en el que estaba interesado ha cambiado de precio. Hoy cuesta $ " + nuevoPrecio;
+		enviarMail (mensaje, "con nuevo precio");
+	}
+		
+	public void avisarReserva (Inmueble x) {
+		String mensaje = "El inmueble " + x.getDomicilio( ) +
+ 			" en el que estaba interesado ha sido reservado.";
+		enviarMail (mensaje, "reservado");
+	}
+		
+	public void avisarVenta (Inmueble x) {
+		String mensaje = "El inmueble " + x.getDomicilio( ) +
+ 			" en el que estaba interesado ha sido vendido.";
+		enviarMail (mensaje, "vendido");
 	}
 
 	@Override
 	public void avisarRetiroVenta(Inmueble x) {
+		String mensaje = "El inmueble " + x.getDomicilio( ) +
+				" en el que estaba interesado ha sido retirado.";
+		enviarMail (mensaje, "retirado");
+	}
+
+	private void enviarMail (String mensaje, String evento) {
+		// TODO: enviar mail
+		// este es un método sólo para probar; luego debe ser implementado
+		System.out.println ("Mail a " + this.getNombre( ));
+		System.out.println (evento);
+		System.out.println (mensaje);
+		System.out.println( );
 	}
 }

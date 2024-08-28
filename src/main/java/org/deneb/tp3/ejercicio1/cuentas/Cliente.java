@@ -94,7 +94,7 @@ public abstract class Cliente implements OperacionBanco{
 		}
 	}
 
-	public void setMaximoCuentas(int maximo){
+	public static void setMaximoCuentas(int maximo){
 		maximoCuentas = maximo;
 	}
 }

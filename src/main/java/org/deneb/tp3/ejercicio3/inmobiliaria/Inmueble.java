@@ -7,7 +7,7 @@ public abstract class Inmueble {
 	private double superficie;
 	private int cantidadAmbientes;
 	private int precio;
-	private Cliente[ ] interesados;
+	private Notificable[ ] interesados;
 	private int cantidadInteresados;
 	private final int maximoInteresados = 1000;
 	private boolean reservado;
@@ -24,40 +24,40 @@ public abstract class Inmueble {
 	}
 		
 	public String getDomicilio( ) {
-		return domicilio;
+			return domicilio;
 	}
 		
 	public double getSuperficie( ) {
-		return superficie;
+			return superficie;
 	}
 		
 	public int getCantidadAmbientes( ) {
-		return cantidadAmbientes;
+			return cantidadAmbientes;
 	}
 		
 	public int getPrecio( ) {
 		return precio;
 	}
 	
-	public void setPrecio(int nuevo) {
+	public void setPrecio (int nuevo) {
 		precio = nuevo;
 		if (interesados != null)
 			for (int i = 0; i < cantidadInteresados; i++)
-				interesados[i].avisarCambioPrecio(this,nuevo);
+				interesados[i].avisarCambioPrecio (this, nuevo);
 	}
-		
-	public void anotarInteresado (Cliente c) {
+
+	public void anotarInteresado (Notificable c) {
 		if (cantidadInteresados == maximoInteresados) {
 			System.out.println ("Se superó el máximo de interesados para este inmueble");
 			return;
 		}
 		if (interesados == null)
-			interesados = new Cliente [maximoInteresados];
+			interesados = new Notificable [maximoInteresados];
 		interesados [cantidadInteresados] = c;
 		cantidadInteresados++;
 	}
 
-	private int posicionInteresado (Cliente c) {
+	private int posicionInteresado (Notificable c) {
 		if (interesados == null)
 			return -1;
 		for (int pos = 0; pos < cantidadInteresados; pos++)
@@ -66,9 +66,9 @@ public abstract class Inmueble {
 		return -1;
 	}
 
-	public void eliminarInteresado (Cliente c) {
+	public void eliminarInteresado (Notificable c) {
 		int pos = posicionInteresado(c);
-		if (pos > -1) {	// encontró el cliente
+		if (pos > -1) {	// encontró el interesado
 			// voy a eliminar el elemento del arreglo por compresión
 			for (int i = pos; i < cantidadInteresados-1; i++) {
 				interesados[i] = interesados[i+1];
@@ -112,7 +112,6 @@ public abstract class Inmueble {
 			System.out.println (interesados[i].getNombre( ));
 	}
 	
-	// nuevo método:
 	public abstract double comisionVendedor( );
 
 }

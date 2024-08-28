@@ -3,13 +3,11 @@ package org.deneb.tp3.ejercicio1;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.deneb.tp3.ejercicio1.cuentas.CajaAhorro;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.deneb.tp3.ejercicio1.cuentas.*;
-
-class TestCuentas1 {
+class TestCuentas5 {
 
 	private CuentaBancaria cajaAhorro1;
 	private CuentaBancaria cuentaCorriente1;
@@ -21,11 +19,14 @@ class TestCuentas1 {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		juan = new Persona("Juan", "Pï¿½rez", 5122122, "Lima", 444, "Belgrano", "Venezuela", "C1000AAA", "01140101010",
+		CajaAhorro.setComisionCA(500.00);
+		CuentaCorriente.setComisionCC(1000.00);
+		Cliente.setMaximoCuentas(5);
+		juan = new Persona("Juan", "Pérez", 5122122, "Lima", 444, "Belgrano", "Venezuela", "C1000AAA", "01140101010",
 				"juan@perez.com.ar");
-		ines = new Persona("Inï¿½s", "Garcï¿½a", 4011011, "Cerrito", 1111, "Santa Fe", "Arenales", "C1111ZZZ",
+		ines = new Persona("Inés", "García", 4011011, "Cerrito", 1111, "Santa Fe", "Arenales", "C1111ZZZ",
 				"01140001111", "ines@garcia.com.ar");
-		empresa = new Empresa("Luna Nueva S.A.", "1701234562", "Freire", 8888, "Dorrego", "Concepciï¿½n Arenal",
+		empresa = new Empresa("Luna Nueva S.A.", "1701234562", "Freire", 8888, "Dorrego", "Concepción Arenal",
 				"C0000YYY", "01199991000", "info@empresa.com.ar");
 		cajaAhorro1 = new CajaAhorro(1234, juan);
 		cajaAhorro2 = new CajaAhorro(5678, ines);
@@ -69,6 +70,29 @@ class TestCuentas1 {
 		assertEquals(cuentaCorriente2.getSaldo(), -1400, 0.01);
 		Exception exception = assertThrows(SaldoInsuficienteException.class, () -> cuentaCorriente2.extraer(700.00));
 		assertEquals(exception.getMessage(), "Saldo: " + cuentaCorriente2.getSaldo());
+	}
+
+
+	@Test
+	void testComisiones() {
+		assertEquals(ines.obtenerComision(), 1500.00, 0.01);
+		assertEquals(empresa.obtenerComision(), 1000.00, 0.01);
+
+		assertEquals(cajaAhorro1.obtenerComision(), 500.00, 0.01);
+		assertEquals(cuentaCorriente1.obtenerComision(), 1000.00, 0.01);
+	}
+
+	@Test
+	void testSaldoDisponible() {
+		assertEquals(ines.obtenerSaldoDisponible(), 0.00, 0.01);
+		CuentaBancaria cajaAhorro3 = new CajaAhorro(1234, empresa);
+		cajaAhorro3.depositar(1000.00);
+		cajaAhorro3.extraer(700.00);
+		cuentaCorriente2.extraer(700.00);
+		assertEquals(empresa.obtenerSaldoDisponible(), 1600.00, 0.01);
+
+		assertEquals(cajaAhorro3.obtenerSaldoDisponible(), 300.00, 0.01);
+		assertEquals(cuentaCorriente2.obtenerSaldoDisponible(), 1300.00, 0.01);
 	}
 
 }

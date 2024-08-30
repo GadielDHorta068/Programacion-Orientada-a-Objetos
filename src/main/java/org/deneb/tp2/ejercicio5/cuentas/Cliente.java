@@ -98,7 +98,7 @@ public abstract class Cliente {
 		}
 	}
 
-	public void setMaximoCuentas(int maximo){
+	public static void setMaximoCuentas(int maximo){
 		maximoCuentas = maximo;
 	}
 }

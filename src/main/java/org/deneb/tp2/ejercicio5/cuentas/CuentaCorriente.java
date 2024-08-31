@@ -15,13 +15,17 @@ public class CuentaCorriente extends CuentaBancaria {
 	}
 
 	@Override
-	public boolean extraer( double monto) {
-		if (monto > super.getSaldo())
-			return false;
-		else {
-			super.setSaldo(getSaldo() -monto);
-			return true;
+	public void extraer(double monto) throws SaldoInsuficienteException {
+		if (monto <= saldoDisponible()) {
+			super.setSaldo(getSaldo() - monto);
+		} else {
+			throw new SaldoInsuficienteException(monto);
 		}
+	}
+
+	@Override
+	public double saldoDisponible() {
+		return getSaldo() + descubierto;
 	}
 
 	public double getDescubierto ( ) {

@@ -8,14 +8,10 @@ public abstract class CuentaBancaria {
 	private double saldo;
 
 	public CuentaBancaria (int numero, Cliente titular) {
-		boolean ok = titular.agregarCuenta(this);
-		if (ok) {
+
 			this.numero = numero;
 			this.titular = titular;
 			this.saldo = 0;
-		}
-		// veremos el significado de lo que sigue en un capítulo posterior:
-		else throw new IllegalArgumentException( );
 	}
 
 	public int getNumero ( ) {
@@ -38,6 +34,8 @@ public abstract class CuentaBancaria {
 		saldo += monto;
 	}
 
-	public abstract boolean extraer(double monto);
+	public abstract void extraer(double monto) throws SaldoInsuficienteException;
+
+	public abstract  double saldoDisponible();
 
 }

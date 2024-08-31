@@ -10,13 +10,17 @@ public class CajaAhorro extends CuentaBancaria {
 	}
 
 	@Override
-	public boolean extraer( double monto) {
-		if (monto > super.getSaldo())
-			return false;
-		else {
-			super.setSaldo(getSaldo() -monto);
-			return true;
+	public void extraer(double monto) {
+		if (monto <= super.getSaldo()) {
+			super.setSaldo(getSaldo() - monto);
+		} else {
+			throw new SaldoInsuficienteException(monto);
 		}
+	}
+
+	@Override
+	public double saldoDisponible() {
+		return getSaldo();
 	}
 
 	public double getInteresesGanados ( ) {

@@ -1,6 +1,5 @@
 package org.deneb.tp2.ejercicio5.cuentas;
 
-import org.deneb.tp2.ejercicio5.cuentas.CuentaBancaria;
 
 public abstract class Cliente {
 	
@@ -39,17 +38,42 @@ public abstract class Cliente {
 			return cuentas;
 	}
 
-	public boolean agregarCuenta (CuentaBancaria cuenta) {
-		if (cantidadCuentas < maximoCuentas) {
-			cuentas [cantidadCuentas] = cuenta;
-			cantidadCuentas++;
-			return true;
+	public void agregarCuenta (CuentaBancaria cuenta) {
+		if (cantidadCuentas == maximoCuentas) {
+			throw new ClienteMaxCuentasException("maximo cuentas");
 		}
-		else return false;
+		cuentas [cantidadCuentas] = cuenta;
+		cantidadCuentas++;
 	}
 	
 	public int getCantidadCuentas ( ) {
 			return cantidadCuentas;
+	}
+	public double saldoTotal() {
+		double saldoTotal = 0;
+		for (CuentaBancaria cuenta : getCuentas()) {
+			if (cuenta != null) {
+				saldoTotal += cuenta.getSaldo();
+			}
+		}
+		return saldoTotal;
+	}
+
+	public double saldoDisponibleTotal(){
+		double i= 0;
+		for(CuentaBancaria cuenta : getCuentas()){
+			i += cuenta.getSaldo();
+		}
+		return i;
+	}
+
+	public void pagarTarjetaCredito(double importe) throws ClienteMaxCuentasException {
+		if(importe > saldoDisponibleTotal()){
+            throw new ClienteMaxCuentasException("Saldo insuficiente");
+		}
+		//for para cajas ahorro
+		//instance of
+		//for cuenta corriente
 	}
 
 	private class Domicilio {

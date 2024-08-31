@@ -111,7 +111,7 @@ class TestCuentas4 {
 	}
 
 	@Test
-	void testPagarTarjetaCredito2() {		
+	void testPagarTarjetaCredito2() throws ClienteMaxCuentasException {
 		CuentaBancaria cajaAhorro3 = new CajaAhorro(2745, empresa);
 		cajaAhorro3.depositar(1000.00);
 		CuentaBancaria cajaAhorro4 = new CajaAhorro(4556, empresa);

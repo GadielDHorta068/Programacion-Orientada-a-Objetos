@@ -12,6 +12,7 @@ public abstract class CuentaBancaria {
 			this.numero = numero;
 			this.titular = titular;
 			this.saldo = 0;
+			titular.agregarCuenta(this);
 	}
 
 	public int getNumero ( ) {

@@ -10,11 +10,11 @@ public class CajaAhorro extends CuentaBancaria {
 	}
 
 	@Override
-	public void extraer(double monto) {
-		if (monto <= super.getSaldo()) {
-			super.setSaldo(getSaldo() - monto);
-		} else {
+	public void extraer(double monto) throws  SaldoInsuficienteException{
+		if (monto > super.getSaldo()) {
 			throw new SaldoInsuficienteException(monto);
+		} else {
+			super.setSaldo(getSaldo() - monto);
 		}
 	}
 

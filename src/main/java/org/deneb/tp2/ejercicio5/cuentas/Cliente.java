@@ -67,13 +67,38 @@ public abstract class Cliente {
 		return i;
 	}
 
-	public void pagarTarjetaCredito(double importe) throws ClienteMaxCuentasException {
-		if(importe > saldoDisponibleTotal()){
-            throw new ClienteMaxCuentasException("Saldo insuficiente");
+	public void pagarTarjetaCredito(double importe) throws SaldoInsuficienteException {
+		if (importe > saldoDisponibleTotal()) {
+			throw new SaldoInsuficienteException(importe);
 		}
-		//for para cajas ahorro
-		//instance of
-		//for cuenta corriente
+
+		for (CuentaBancaria cuenta : getCuentas()) {
+			if (cuenta instanceof CajaAhorro) {
+				double saldoCuenta = cuenta.getSaldo();
+				if (importe >= saldoCuenta) {
+					importe -= saldoCuenta;
+					cuenta.setSaldo(0);
+				} else {
+					cuenta.setSaldo(saldoCuenta - importe);
+					importe = 0;
+				}
+			}
+		}
+
+		if (importe > 0) {
+			for (CuentaBancaria cuenta : getCuentas()) {
+				if (cuenta instanceof CuentaCorriente) {
+					double saldoCuenta = cuenta.getSaldo();
+					if (importe >= saldoCuenta) {
+						importe -= saldoCuenta;
+						cuenta.setSaldo(0);
+					} else {
+						cuenta.setSaldo(saldoCuenta - importe);
+						importe = 0; // Todo el importe ha sido pagado
+					}
+				}
+			}
+		}
 	}
 
 	private class Domicilio {

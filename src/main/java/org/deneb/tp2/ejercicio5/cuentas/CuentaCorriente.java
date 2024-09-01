@@ -16,10 +16,10 @@ public class CuentaCorriente extends CuentaBancaria {
 
 	@Override
 	public void extraer(double monto) throws SaldoInsuficienteException {
-		if (monto <= saldoDisponible()) {
-			super.setSaldo(getSaldo() - monto);
-		} else {
+		if (monto > saldoDisponible()) {
 			throw new SaldoInsuficienteException(monto);
+		} else {
+			super.setSaldo(getSaldo() - monto);
 		}
 	}
 

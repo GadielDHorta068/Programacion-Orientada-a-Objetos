@@ -21,15 +21,16 @@ public class GUI extends JFrame {
     private final JLabel salarioError;
     private final JLabel nacimientoError;
     private final List<SalariedEmployee> employees;
+    private TablaWindow employeeTableWindow;
 
     public GUI() {
-        super("Agregar Empleado Asalariado");
+        super("Gestionar Empleado Asalariado");
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         employees = new ArrayList<>();
 
-        //Comienzo construccion grilla
+        // Comienzo construccion grilla
         gbc.gridx = 0; gbc.gridy = 0;
 
         add(new JLabel("Nombre:"), gbc);
@@ -86,33 +87,46 @@ public class GUI extends JFrame {
         gbc.gridx = 2;
         add(nacimientoError, gbc);
 
-
-        JButton addButton = new JButton("Agregar");
+        JButton addButton = new JButton("Agregar/Modificar");
         gbc.gridx = 1; gbc.gridy = 5;
         add(addButton, gbc);
-        //Fin de armado de la grilla
 
         addButton.addActionListener(e -> {
-            validarAgregar();
+            validarAgregarOModificar();
             pack();
         });
 
+        // Botón para abrir la ventana de la tabla de empleados
+        JButton showTableButton = new JButton("Mostrar Empleados");
+        gbc.gridx = 1; gbc.gridy = 6;
+        add(showTableButton, gbc);
 
+        showTableButton.addActionListener(e -> mostrarTabla());
+
+        // Fin de armado de la grilla
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private void validarAgregar() {
+    private void mostrarTabla() {
+        if (employeeTableWindow == null || !employeeTableWindow.isVisible()) {
+            employeeTableWindow = new TablaWindow(employees);
+            employeeTableWindow.setVisible(true);
+        } else {
+            employeeTableWindow.actualizar(employees);
+            employeeTableWindow.toFront();
+        }
+    }
 
+    private void validarAgregarOModificar() {
         nombreError.setText("");
         apellidoError.setText("");
         documentoError.setText("");
         salarioError.setText("");
         nacimientoError.setText("");
 
-        // Validación con expresiones regulares gg google gemini adv
         boolean isValid = true;
         String firstName = nombre.getText().trim();
         String lastName = apellido.getText().trim();
@@ -148,10 +162,35 @@ public class GUI extends JFrame {
         if (isValid) {
             double weeklySalary = Double.parseDouble(salary);
             LocalDate localDate = LocalDate.parse(date);
-            SalariedEmployee employee = new SalariedEmployee(firstName, lastName, ssn, weeklySalary, localDate);
-            employees.add(employee);
-            JOptionPane.showMessageDialog(this, "Empleado agregado exitosamente");
+            SalariedEmployee existingEmployee = buscarEmpleadoPorDNI(ssn);
+
+            if (existingEmployee == null) {
+                SalariedEmployee employee = new SalariedEmployee(firstName, lastName, ssn, weeklySalary, localDate);
+                employees.add(employee);
+                if (employeeTableWindow != null) {
+                    employeeTableWindow.actualizar(employees);
+                }
+                JOptionPane.showMessageDialog(this, "Empleado agregado exitosamente");
+            } else {
+                existingEmployee.setFirstName(firstName);
+                existingEmployee.setLastName(lastName);
+                existingEmployee.setWeeklySalary(weeklySalary);
+                existingEmployee.setBirthDate(localDate);
+                if (employeeTableWindow != null) {
+                    employeeTableWindow.actualizar(employees);
+                }
+                JOptionPane.showMessageDialog(this, "Empleado modificado exitosamente");
+            }
         }
+    }
+
+    private SalariedEmployee buscarEmpleadoPorDNI(String ssn) {
+        for (SalariedEmployee employee : employees) {
+            if (employee.getSSN().equals(ssn)) {
+                return employee;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {

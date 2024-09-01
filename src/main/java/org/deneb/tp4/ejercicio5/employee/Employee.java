@@ -12,9 +12,6 @@ public abstract class Employee
    private LocalDate birthDate;
    static public float additional;
 
-   public LocalDate getBirthDate() {
-      return birthDate;
-   }
 
    // three-argument constructor
    public Employee(String first, String last, String ssn)
@@ -87,6 +84,14 @@ public abstract class Employee
 
    // abstract method overridden by subclasses
    public abstract double earnings(); // no implementation here
+
+   public LocalDate getBirthDate() {
+      return birthDate;
+   }
+   public void setBirthDate(LocalDate date){ birthDate = date;}
+   public String getSSN(){return socialSecurityNumber;}
+
+
 } // end abstract class Employee
 
 

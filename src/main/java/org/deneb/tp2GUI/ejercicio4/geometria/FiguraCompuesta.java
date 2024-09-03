@@ -2,6 +2,8 @@
 package org.deneb.tp2GUI.ejercicio4.geometria;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class FiguraCompuesta extends Figura {
 
@@ -45,5 +47,27 @@ public class FiguraCompuesta extends Figura {
 
 	@Override
 	public void setColor(Color color) {
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder string = new StringBuilder();
+		for (Figura figura : componentes){
+			string.append(figura.toString());
+		}
+		return string.toString();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		FiguraCompuesta that = (FiguraCompuesta) o;
+		return Objects.deepEquals(componentes, that.componentes);
+	}
+
+	@Override
+	public int hashCode() {
+		return Arrays.hashCode(componentes);
 	}
 }

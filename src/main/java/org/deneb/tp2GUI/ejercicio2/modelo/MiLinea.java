@@ -1,8 +1,8 @@
-package org.deneb.tp2GUI.ejercicio2;
+package org.deneb.tp2GUI.ejercicio2.modelo;
 
 import java.awt.*;
 
-class MiLinea extends MiFigura {
+public class MiLinea extends MiFigura {
     public MiLinea() {
         super();
     }

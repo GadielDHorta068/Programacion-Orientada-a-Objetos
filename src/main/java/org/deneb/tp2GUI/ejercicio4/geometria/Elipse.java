@@ -2,13 +2,14 @@
 package org.deneb.tp2GUI.ejercicio4.geometria;
 
 import java.awt.*;
+import java.util.Objects;
 
 public class Elipse extends Figura {
 
-	private double radioMayor;
-	private double radioMenor;
-	private Punto centro;
-	private double anguloRadioMayor;
+	private final double radioMayor;
+	private final double radioMenor;
+	private final Punto centro;
+	private final double anguloRadioMayor;
 	private Color color;
 
 	public Elipse(double radioMayor, double radioMenor, Punto centro, double anguloRadioMayor) {
@@ -91,5 +92,23 @@ public class Elipse extends Figura {
 	@Override
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	@Override
+	public String toString() {
+		return STR."Elipse{radioMayor=\{radioMayor}, radioMenor=\{radioMenor}, centro=\{centro}, anguloRadioMayor=\{anguloRadioMayor}, color=\{color}\{'}'}";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Elipse elipse = (Elipse) o;
+		return Double.compare(radioMayor, elipse.radioMayor) == 0 && Double.compare(radioMenor, elipse.radioMenor) == 0 && Double.compare(anguloRadioMayor, elipse.anguloRadioMayor) == 0 && Objects.equals(centro, elipse.centro) && Objects.equals(color, elipse.color);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(radioMayor, radioMenor, centro, anguloRadioMayor, color);
 	}
 }

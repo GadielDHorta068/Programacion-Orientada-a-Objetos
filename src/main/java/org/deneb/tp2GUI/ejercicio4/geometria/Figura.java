@@ -12,4 +12,6 @@ public abstract class Figura {
 	public abstract void trasladar (double deltaX, double deltaY);
 	public abstract void dibujar(Graphics g);
 	public abstract void setColor(Color color);
+	public abstract String toString();
+
 }

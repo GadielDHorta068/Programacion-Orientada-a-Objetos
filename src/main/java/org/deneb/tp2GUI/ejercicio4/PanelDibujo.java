@@ -48,6 +48,8 @@ public class PanelDibujo extends JPanel {
                 int numFigura = Integer.parseInt(figuraField.getText());
                 if (numFigura >= 0 && numFigura <= figuras.size()) {
                     figuraSeleccionada = numFigura - 1;
+                }else {
+                    JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
                 }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Ingrese un número válido.");
@@ -109,7 +111,8 @@ public class PanelDibujo extends JPanel {
         JFrame frame = new JFrame("Figuras Random");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        frame.setSize(600, 600);
+        int pantallaSize = 800;
+        frame.setSize(pantallaSize, pantallaSize);
 
         List<Figura> figu = new ArrayList<>();
         Punto[] contornoTriangulo = {

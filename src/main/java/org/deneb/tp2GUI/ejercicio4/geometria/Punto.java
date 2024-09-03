@@ -2,6 +2,8 @@
 
 package org.deneb.tp2GUI.ejercicio4.geometria;
 
+import java.util.Objects;
+
 public class Punto {
 
 		// atributos:
@@ -46,6 +48,19 @@ public class Punto {
 		}
 	
 		public String toString( ) {
-			return new Double(getX( )).toString( ) + ";" + new Double(getY( )).toString( );
+			return STR."\{new Double(getX()).toString()};\{new Double(getY()).toString()}";
 		}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Punto punto = (Punto) o;
+		return Double.compare(coordX, punto.coordX) == 0 && Double.compare(coordY, punto.coordY) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(coordX, coordY);
+	}
 }

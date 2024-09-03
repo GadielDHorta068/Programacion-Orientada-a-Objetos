@@ -1,5 +1,11 @@
 package org.deneb.tp2GUI.ejercicio2;
 
+import org.deneb.tp2GUI.ejercicio2.modelo.MiFigura;
+import org.deneb.tp2GUI.ejercicio2.modelo.MiLinea;
+import org.deneb.tp2GUI.ejercicio2.modelo.MiOvalo;
+import org.deneb.tp2GUI.ejercicio2.modelo.MiRectangulo;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Random;
@@ -59,11 +65,24 @@ public class FigurasRandom extends JPanel {
     public static void main() {
         JFrame frame = new JFrame("Figuras Random");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int numLineas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de lineas:"));
-        int numOvalos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de ovalos:"));
-        int numRectangulos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de rectangulos:"));
 
-        frame.setSize(600, 600);
+        int numLineas = 0;
+        int numOvalos = 0;
+        int numRectangulos = 0;
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                numLineas = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de lineas:"));
+                numOvalos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de ovalos:"));
+                numRectangulos = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la cantidad de rectangulos:"));
+                validInput = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error: Por favor, ingrese un número entero válido.", "Error de entrada", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        int tamanoVentana = 600;
+        frame.setSize(tamanoVentana, tamanoVentana);
 
         FigurasRandom panel = new FigurasRandom(numLineas,numOvalos, numRectangulos);
         frame.add(panel);

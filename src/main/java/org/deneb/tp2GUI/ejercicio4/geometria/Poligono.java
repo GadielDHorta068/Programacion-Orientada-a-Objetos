@@ -2,6 +2,8 @@
 package org.deneb.tp2GUI.ejercicio4.geometria;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class Poligono extends Figura {
 
@@ -126,5 +128,23 @@ public class Poligono extends Figura {
 		} else {
 			g2d.drawPolygon(polygon);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return STR."Poligono{contorno=\{Arrays.toString(contorno)}, isRelleno=\{isRelleno}, relleno=\{relleno}\{'}'}";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Poligono poligono = (Poligono) o;
+		return isRelleno == poligono.isRelleno && Objects.deepEquals(contorno, poligono.contorno) && Objects.equals(relleno, poligono.relleno);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(Arrays.hashCode(contorno), isRelleno, relleno);
 	}
 }

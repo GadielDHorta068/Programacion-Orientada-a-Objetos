@@ -1,9 +1,13 @@
-package org.deneb.tp2GUI.ejercicio2;
+package org.deneb.tp2GUI.ejercicio2.modelo;
 
 import java.awt.*;
+import java.util.Objects;
 
-abstract class MiFigura {
-    private int x1, y1, x2, y2;
+public abstract class MiFigura {
+    private int x1;
+    private int y1;
+    private int x2;
+    private int y2;
     private Color color;
 
     public MiFigura() {
@@ -31,4 +35,22 @@ abstract class MiFigura {
     public void setColor(Color color) { this.color = color; }
 
     public abstract void dibujar(Graphics g);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MiFigura miFigura = (MiFigura) o;
+        return x1 == miFigura.x1 && y1 == miFigura.y1 && x2 == miFigura.x2 && y2 == miFigura.y2 && Objects.equals(color, miFigura.color);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x1, y1, x2, y2, color);
+    }
+
+    @Override
+    public String toString() {
+        return STR."MiFigura x1: \{x1} x2: \{x2} y1: \{y1} y2: \{y2}";
+    }
 }

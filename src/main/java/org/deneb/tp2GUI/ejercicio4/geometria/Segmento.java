@@ -1,5 +1,7 @@
 package org.deneb.tp2GUI.ejercicio4.geometria;
 
+import java.util.Objects;
+
 public class Segmento {
 
 	private Punto extremo1;
@@ -30,5 +32,23 @@ public class Segmento {
 	public double getAnguloX ( ) {
 			return Math.atan(
 				(extremo2.getY() - extremo1.getY()) / (extremo2.getX() - extremo1.getX()) );
+	}
+
+	@Override
+	public String toString() {
+		return STR."Segmento{extremo1=\{extremo1}, extremo2=\{extremo2}\{'}'}";
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Segmento segmento = (Segmento) o;
+		return Objects.equals(extremo1, segmento.extremo1) && Objects.equals(extremo2, segmento.extremo2);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(extremo1, extremo2);
 	}
 }

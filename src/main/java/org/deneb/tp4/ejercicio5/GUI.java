@@ -23,7 +23,7 @@ public class GUI extends JFrame {
     private final List<SalariedEmployee> employees;
     private TablaWindow employeeTableWindow;
 
-    public GUI() {
+    public GUI(TablaWindow tabla) {
         super("Gestionar Empleado Asalariado");
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -92,16 +92,13 @@ public class GUI extends JFrame {
         add(addButton, gbc);
 
         addButton.addActionListener(e -> {
-            validarAgregarOModificar();
+            boolean valid = validarAgregarOModificar();
+            if (valid) {
+                tabla.actualizar(employees);
+                setVisible(false); // Solo se oculta si los datos son válidos
+            }
             pack();
         });
-
-        // Botón para abrir la ventana de la tabla de empleados
-        JButton showTableButton = new JButton("Mostrar Empleados");
-        gbc.gridx = 1; gbc.gridy = 6;
-        add(showTableButton, gbc);
-
-        showTableButton.addActionListener(e -> mostrarTabla());
 
         // Fin de armado de la grilla
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +117,7 @@ public class GUI extends JFrame {
         }
     }
 
-    private void validarAgregarOModificar() {
+    private boolean validarAgregarOModificar() {
         nombreError.setText("");
         apellidoError.setText("");
         documentoError.setText("");
@@ -134,26 +131,31 @@ public class GUI extends JFrame {
         String salary = salario.getText().trim();
         String date = fechaNacimiento.getText().trim();
 
+        // Validar nombre
         if (!Pattern.matches("^[A-Z][a-zA-Z]*$", firstName)) {
             nombreError.setText("Nombre inválido");
             isValid = false;
         }
 
+        // Validar apellido
         if (!Pattern.matches("^[A-Z][a-zA-Z]*$", lastName)) {
             apellidoError.setText("Apellido inválido");
             isValid = false;
         }
 
+        // Validar DNI
         if (!Pattern.matches("^\\d{3}-\\d{2}-\\d{4}$", ssn)) {
             documentoError.setText("Documento inválido");
             isValid = false;
         }
 
+        // Validar salario
         if (!Pattern.matches("^\\d+(\\.\\d{1,2})?$", salary)) {
             salarioError.setText("Salario inválido");
             isValid = false;
         }
 
+        // Validar fecha
         if (!Pattern.matches("^\\d{4}-\\d{2}-\\d{2}$", date)) {
             nacimientoError.setText("Fecha inválida");
             isValid = false;
@@ -165,6 +167,7 @@ public class GUI extends JFrame {
             SalariedEmployee existingEmployee = buscarEmpleadoPorDNI(ssn);
 
             if (existingEmployee == null) {
+                // Agregar empleado si no existe
                 SalariedEmployee employee = new SalariedEmployee(firstName, lastName, ssn, weeklySalary, localDate);
                 employees.add(employee);
                 if (employeeTableWindow != null) {
@@ -172,6 +175,7 @@ public class GUI extends JFrame {
                 }
                 JOptionPane.showMessageDialog(this, "Empleado agregado exitosamente");
             } else {
+                // Modificar empleado existente
                 existingEmployee.setFirstName(firstName);
                 existingEmployee.setLastName(lastName);
                 existingEmployee.setWeeklySalary(weeklySalary);
@@ -182,6 +186,8 @@ public class GUI extends JFrame {
                 JOptionPane.showMessageDialog(this, "Empleado modificado exitosamente");
             }
         }
+
+        return isValid; // Retornar si es válido o no
     }
 
     private SalariedEmployee buscarEmpleadoPorDNI(String ssn) {
@@ -191,15 +197,5 @@ public class GUI extends JFrame {
             }
         }
         return null;
-    }
-
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        new GUI();
     }
 }

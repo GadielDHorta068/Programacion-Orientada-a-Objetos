@@ -3,10 +3,10 @@ package org.deneb.parcial1.modelo;
 import java.time.LocalDate;
 
 public class Pago {
-    private LocalDate fecha;
-    private double importe;
-    private Persona transfiere;
-    private Persona recibe;
+    private final LocalDate fecha;
+    private final double importe;
+    private final Persona transfiere;
+    private final Persona recibe;
 
     public Pago(LocalDate fecha, double importe, Persona transfiere, Persona recibe) {
         this.fecha = fecha;

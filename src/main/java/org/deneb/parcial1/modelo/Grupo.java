@@ -17,13 +17,6 @@ public class Grupo {
         gastos = new ArrayList<>();
     }
 
-    public Pago agregarPago(Pago pago) throws PersonaRepetidaException {
-        if(pago.getRecibe().equals(pago.getTransfiere())){
-            throw new PersonaRepetidaException();
-        }
-        pagos.addLast(pago);
-        return pagos.getLast();
-    }
 
     public Pago agregarPago(LocalDate fecha, Persona p1, Persona p2, double importe) throws PersonaRepetidaException {
         Pago pago = new Pago(fecha,importe,p1,p2);
@@ -33,14 +26,6 @@ public class Grupo {
         }
         pagos.addLast(pago);
         return pagos.getLast();
-    }
-
-    public Persona agregarPersona(Persona persona) throws PersonaRepetidaException{
-        if (personas.contains(persona)){
-            throw new PersonaRepetidaException();
-        }
-        personas.addLast(persona);
-        return personas.getLast();
     }
 
     public Persona agregarIntegrante(String nombre, String mail) throws PersonaRepetidaException {

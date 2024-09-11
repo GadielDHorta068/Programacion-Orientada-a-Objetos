@@ -25,7 +25,7 @@ public class Persona {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Persona persona = (Persona) o;
-        return Objects.equals(nombre, persona.nombre) && Objects.equals(email, persona.email);
+        return  Objects.equals(email, persona.email);
     }
 
     @Override

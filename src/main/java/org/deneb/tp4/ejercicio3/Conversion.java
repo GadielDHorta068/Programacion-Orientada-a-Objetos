@@ -3,23 +3,27 @@ class Conversion {
     public static double convertirTemperatura(double valor, String deTipo, String aTipo) {
         double resultado = valor;
 
-        if (deTipo.equals("Grado Celsius")) {
-            if (aTipo.equals("Grado Fahrenheit")) {
-                resultado = celsiusAFahrenheit(valor);
-            } else if (aTipo.equals("Kelvin")) {
-                resultado = celsiusAKelvin(valor);
+        switch (deTipo) {
+            case "Grado Celsius" -> {
+                if (aTipo.equals("Grado Fahrenheit")) {
+                    resultado = celsiusAFahrenheit(valor);
+                } else if (aTipo.equals("Kelvin")) {
+                    resultado = celsiusAKelvin(valor);
+                }
             }
-        } else if (deTipo.equals("Grado Fahrenheit")) {
-            if (aTipo.equals("Grado Celsius")) {
-                resultado = fahrenheitACelsius(valor);
-            } else if (aTipo.equals("Kelvin")) {
-                resultado = fahrenheitAKelvin(valor);
+            case "Grado Fahrenheit" -> {
+                if (aTipo.equals("Grado Celsius")) {
+                    resultado = fahrenheitACelsius(valor);
+                } else if (aTipo.equals("Kelvin")) {
+                    resultado = fahrenheitAKelvin(valor);
+                }
             }
-        } else if (deTipo.equals("Kelvin")) {
-            if (aTipo.equals("Grado Celsius")) {
-                resultado = kelvinACelsius(valor);
-            } else if (aTipo.equals("Grado Fahrenheit")) {
-                resultado = kelvinAFahrenheit(valor);
+            case "Kelvin" -> {
+                if (aTipo.equals("Grado Celsius")) {
+                    resultado = kelvinACelsius(valor);
+                } else if (aTipo.equals("Grado Fahrenheit")) {
+                    resultado = kelvinAFahrenheit(valor);
+                }
             }
         }
 

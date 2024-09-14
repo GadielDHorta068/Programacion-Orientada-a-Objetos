@@ -22,9 +22,13 @@ public class Form extends JFrame {
     private final JLabel nacimientoError;
     private final TablaWindow employeeTableWindow;
 
-    public Form(List<SalariedEmployee> employees,TablaWindow tableWindow) {
+    public Form(List<SalariedEmployee> employees, TablaWindow tableWindow) {
         super("Gestionar Empleado Asalariado");
         this.employeeTableWindow = tableWindow;
+
+        // Eliminar decoración de la ventana
+        setUndecorated(true);
+
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
@@ -111,9 +115,15 @@ public class Form extends JFrame {
 
         JButton addButton = new JButton("Agregar/Modificar");
         StylusUI.aplicarEstiloBoton(addButton);
-        gbc.gridx = 1;
+        gbc.gridx = 0;
         gbc.gridy = 5;
+        gbc.gridwidth = 1;
         add(addButton, gbc);
+
+        JButton cancelButton = new JButton("Cancelar");
+        StylusUI.aplicarEstiloBoton(cancelButton);
+        gbc.gridx = 1;
+        add(cancelButton, gbc);
 
         addButton.addActionListener(e -> {
             boolean valid = validarAgregarOModificar(employees);
@@ -124,10 +134,14 @@ public class Form extends JFrame {
             pack();
         });
 
+        cancelButton.addActionListener(e -> setVisible(false));
+
         // Fin de armado de la grilla
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+        setOpacity(0.9f);
+        setBackground(getBackground().brighter());
         setVisible(true);
     }
 

@@ -3,6 +3,7 @@ package org.deneb.tp4.ejercicio5;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +20,11 @@ public class TablaWindow extends JFrame {
         super("Lista de Empleados");
         setLayout(new BorderLayout());
         employees = new ArrayList<>();
+
+        employees.add(new SalariedEmployee("Ana", "García", "123-45-6789", 500.0, LocalDate.of(1990, 8, 22)));
+        employees.add(new SalariedEmployee("Luis", "Pérez", "987-65-4321", 600.0, LocalDate.of(1990, 8, 22)));
+        employees.add(new SalariedEmployee("María", "Rodríguez", "456-78-9012", 550.0, LocalDate.of(1988, 11, 30)));
+
 
         String[] columnNames = {"Nombre", "Apellido", "DNI", "Salario Semanal", "Fecha"};
         tableModel = new DefaultTableModel(columnNames, 0);
@@ -87,7 +93,7 @@ public class TablaWindow extends JFrame {
             }
         } else {
         ///    JOptionPane.showMessageDialog(this, "Seleccione un empleado para eliminar");
-            SlidingDialog dialog = new SlidingDialog(this, "Mensaje", "sdsds");
+            SlidingDialog dialog = new SlidingDialog(this, "Mensaje", "Seleccione un empleado para eliminar");
             dialog.setVisible(true);
         }
     }

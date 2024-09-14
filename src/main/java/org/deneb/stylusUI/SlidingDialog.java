@@ -12,13 +12,15 @@ public class SlidingDialog extends JDialog {
     public SlidingDialog(JFrame parentFrame, String title, String message) {
         super(parentFrame, title, true);
         setLayout(new BorderLayout());
-
         // Aplicar el estilo de StylusUI
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(StylusUI.COLOR_PRIMARIO);
         JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
         StylusUI.aplicarEstiloEtiqueta(messageLabel); // Aplicar estilo de etiqueta
         panel.add(messageLabel, BorderLayout.CENTER);
+        StylusUI.aplicarFondoTranslucido(panel,60);
+
+
 
         // Crear un panel para el botón
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -66,6 +68,7 @@ public class SlidingDialog extends JDialog {
         });
         timer.setInitialDelay(0);
         timer.start();
+
     }
 
     private void slideOut() {

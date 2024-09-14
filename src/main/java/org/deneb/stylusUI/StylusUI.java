@@ -1,4 +1,4 @@
-package org.deneb.tp4.ejercicio4.stylusUI;
+package org.deneb.stylusUI;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -10,27 +10,24 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.font.TextAttribute;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Map;
-import java.util.Objects;
 
 public class StylusUI {
     // Colores oscuros inspirados en Material UI y Ubuntu
-    public static final Color COLOR_PRIMARIO = new Color(38, 50, 56);  // Gris oscuro
-    public static final Color COLOR_SECUNDARIO = new Color(13, 36, 175);// Azul
-    public static final Color COLOR_FONDO_BOTON = new Color(45, 60, 70);     // Color apenas diferente al fondo
-    public static final Color COLOR_TEXTO = Color.WHITE;                            // Color blanco
-    public static final Color COLOR_HOVER_BOTON = new Color(60, 75, 85);  // Color para hover
-    public static final Color COLOR_PRESIONADO_BOTON = new Color(30, 40, 50);  // Color para presionado
-    private static final Color DARK_BACKGROUND_COLOR = new Color(45, 45, 45); // Fondo oscuro
-    private static final Color TEXT_COLOR = new Color(230, 230, 230);         // Color del texto
-    private static final Color ERROR_COLOR = Color.RED;                       // Color para errores
-    private static final int PADDING_HORIZONTAL = 2;                         // Espacio extra en los botones
-    private static final Color BUTTON_BACKGROUND_COLOR = new Color(45, 60, 70);
+    public static final Color COLOR_PRIMARIO = new Color(47, 51, 58);  // Pantone 433 C (Gris oscuro)
+    public static final Color COLOR_SECUNDARIO = new Color(0, 91, 173); // Pantone 7687 C (Azul profundo)
+    public static final Color COLOR_FONDO_BOTON = new Color(51, 63, 72); // Pantone 7546 C (Gris azulado)
+    public static final Color COLOR_TEXTO = Color.WHITE; // Mantiene el blanco puro
+    public static final Color COLOR_HOVER_BOTON = new Color(132, 146, 156); // Pantone 7544 C (Gris medio)
+    public static final Color COLOR_PRESIONADO_BOTON = new Color(60, 75, 83); // Pantone 7545 C (Gris profundo)
+    private static final Color DARK_BACKGROUND_COLOR = new Color(55, 54, 54); // Pantone Black 7 C (Negro ahumado)
+    private static final Color TEXT_COLOR = new Color(230, 230, 230); // Color del texto
+    private static final Color ERROR_COLOR = Color.RED; // Color para errores (sin cambios)
+    private static final int PADDING_HORIZONTAL = 2; // Espacio extra en los botones
+    private static final Color BUTTON_BACKGROUND_COLOR = new Color(51, 63, 72); // Pantone 7546 C (Gris azulado)
+    private static final String NAME_BUTTON_SOUND = "boton.wav";
     private static final Color BUTTON_HOVER_COLOR = BUTTON_BACKGROUND_COLOR.darker();
     private static final Color BUTTON_PRESSED_COLOR = BUTTON_BACKGROUND_COLOR.brighter();
 
@@ -40,7 +37,7 @@ public class StylusUI {
 
     static {
         try {
-            URL fuenteURL = StylusUI.class.getResource("FiraMonoNerdFontMono-Regular.otf");
+            URL fuenteURL = StylusUI.class.getResource("/FiraMonoNerdFontMono-Regular.otf");
             if (fuenteURL == null) {
                 throw new IOException("No se pudo encontrar la fuente en la URL especificada.");
             }
@@ -66,6 +63,7 @@ public class StylusUI {
             FUENTE_TITULO = new Font("SansSerif", Font.BOLD, 16);
         }
     }
+
 
     /**
      * Esta clase recibe un boton como parametro y le aplica toda la configuracion personalizada que deseemos
@@ -108,7 +106,7 @@ public class StylusUI {
                 boton.setBackground(COLOR_PRESIONADO_BOTON);
 
                 // Reproducir sonido al presionar el botón
-                reproducirSonido("boton.wav");
+                reproducirSonido();
             }
 
             @Override
@@ -125,7 +123,7 @@ public class StylusUI {
 
     /**
      * Cambia la fuente y el fondo a una etiqueta
-     * @param etiqueta
+     * @param etiqueta etiqueta a cambiar
      */
     public static void aplicarEstiloEtiqueta(JLabel etiqueta) {
         etiqueta.setForeground(COLOR_TEXTO);
@@ -219,7 +217,10 @@ public class StylusUI {
         }
     }
 
-    // Método para aplicar estilo al JDialog
+    /**
+     * JDialog a ser tratado medio generico
+     * @param dialog dialog a ser tratado
+     */
     public static void aplicarEstiloDialogo(JDialog dialog) {
         dialog.getContentPane().setBackground(DARK_BACKGROUND_COLOR);
 
@@ -240,7 +241,9 @@ public class StylusUI {
         dialog.setLocationRelativeTo(null); // Centrar el diálogo en la pantalla
     }
 
-    // Método para aplicar estilo a JOptionPane
+    /**
+     * Testear mejor, agarra los componentes de un Joptionpane comun usado en clase y quizas falten elementos
+     */
     public static void aplicarEstiloJOptionPane() {
         UIManager.put("OptionPane.background", DARK_BACKGROUND_COLOR);
         UIManager.put("Panel.background", DARK_BACKGROUND_COLOR);
@@ -249,25 +252,122 @@ public class StylusUI {
         UIManager.put("Button.foreground", TEXT_COLOR);
         UIManager.put("Button.font", FUENTE_TEXTO.deriveFont(14f)); // Actualizar con fuente personalizada
         UIManager.put("Button.border", BorderFactory.createLineBorder(TEXT_COLOR));
-
-        // Personalizar el comportamiento de los botones en JOptionPane
         UIManager.put("OptionPane.buttonFont", FUENTE_TEXTO.deriveFont(14f)); // Actualizar con fuente personalizada
     }
 
-    private static void reproducirSonido(String archivoSonido) {
+    /**
+     * Reproduce el sonido al presionar un boton
+     */
+    private static void reproducirSonido() {
         try {
-            // Cargar el archivo de sonido desde el classpath
-            URL sonidoURL = StylusUI.class.getResource(archivoSonido);
+            URL sonidoURL = StylusUI.class.getResource(StylusUI.NAME_BUTTON_SOUND);
             if (sonidoURL != null) {
                 AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(sonidoURL);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioInputStream);
                 clip.start();
             } else {
-                System.err.println("Archivo de sonido no encontrado: " + archivoSonido);
+                System.err.println(STR."Archivo de sonido no encontrado: \{StylusUI.NAME_BUTTON_SOUND}");
             }
         } catch (Exception e) {
-            System.err.println("Error al reproducir el sonido: " + e.getMessage());
+            System.err.println(STR."Error al reproducir el sonido: \{e.getMessage()}");
         }
+    }
+    public static void aplicarEstiloComboBox(JComboBox<?> comboBox) {
+        comboBox.setBackground(DARK_BACKGROUND_COLOR);
+        comboBox.setForeground(TEXT_COLOR);
+        comboBox.setFont(FUENTE_TEXTO);
+        comboBox.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
+
+        // Estilo de los ítems desplegados
+        comboBox.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
+            @Override
+            protected JButton createArrowButton() {
+                JButton button = super.createArrowButton();
+                button.setBackground(BUTTON_BACKGROUND_COLOR);
+                button.setForeground(TEXT_COLOR);
+                return button;
+            }
+        });
+    }
+
+    public static void aplicarEstiloScrollPane(JScrollPane scrollPane) {
+        scrollPane.getViewport().setBackground(DARK_BACKGROUND_COLOR);
+        scrollPane.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
+
+        // Personaliza las barras de desplazamiento
+        JScrollBar verticalBar = scrollPane.getVerticalScrollBar();
+        JScrollBar horizontalBar = scrollPane.getHorizontalScrollBar();
+
+        verticalBar.setBackground(BUTTON_BACKGROUND_COLOR);
+        verticalBar.setForeground(TEXT_COLOR);
+        horizontalBar.setBackground(BUTTON_BACKGROUND_COLOR);
+        horizontalBar.setForeground(TEXT_COLOR);
+
+        // Ajustar el grosor de las barras de desplazamiento
+        verticalBar.setPreferredSize(new Dimension(12, Integer.MAX_VALUE));
+        horizontalBar.setPreferredSize(new Dimension(Integer.MAX_VALUE, 12));
+    }
+
+    public static void aplicarEstiloProgressBar(JProgressBar progressBar) {
+        progressBar.setBackground(DARK_BACKGROUND_COLOR);
+        progressBar.setForeground(COLOR_SECUNDARIO); // Color del progreso
+        progressBar.setFont(FUENTE_TEXTO);
+        progressBar.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
+
+        // Texto sobre la barra de progreso (opcional)
+        progressBar.setStringPainted(true);
+        progressBar.setString("Maldito Ilon Mosc"); // O el texto que prefieras
+    }
+
+    public static void aplicarEstiloRadioButton(JRadioButton radioButton) {
+        radioButton.setBackground(DARK_BACKGROUND_COLOR);
+        radioButton.setForeground(TEXT_COLOR);
+        radioButton.setFont(FUENTE_TEXTO);
+
+        // Personaliza el ícono seleccionado
+        radioButton.setIcon(new javax.swing.ImageIcon("ruta/iconoNoSeleccionado.png"));
+        radioButton.setSelectedIcon(new javax.swing.ImageIcon("ruta/iconoSeleccionado.png"));
+    }
+
+    public static void aplicarEstiloCheckBox(JCheckBox checkBox) {
+        checkBox.setBackground(DARK_BACKGROUND_COLOR);
+        checkBox.setForeground(TEXT_COLOR);
+        checkBox.setFont(FUENTE_TEXTO);
+
+        // Personaliza el ícono marcado
+        checkBox.setIcon(new javax.swing.ImageIcon("ruta/iconoNoSeleccionado.png"));
+        checkBox.setSelectedIcon(new javax.swing.ImageIcon("ruta/iconoSeleccionado.png"));
+    }
+
+    public static void aplicarEstiloTabbedPane(JTabbedPane tabbedPane) {
+        tabbedPane.setBackground(DARK_BACKGROUND_COLOR);
+        tabbedPane.setForeground(TEXT_COLOR);
+        tabbedPane.setFont(FUENTE_TEXTO);
+
+        // Personalizar las pestañas
+        tabbedPane.setUI(new javax.swing.plaf.basic.BasicTabbedPaneUI() {
+            @Override
+            protected void installDefaults() {
+                super.installDefaults();
+                tabAreaInsets.left = 10;
+            }
+
+            @Override
+            protected void paintTabBackground(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+                if (isSelected) {
+                    g.setColor(COLOR_SECUNDARIO);
+                } else {
+                    g.setColor(DARK_BACKGROUND_COLOR);
+                }
+                g.fillRect(x, y, w, h);
+            }
+
+            @Override
+            protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
+                g.setColor(COLOR_SECUNDARIO.darker());
+                g.drawRect(x, y, w, h);
+            }
+        });
     }
 }

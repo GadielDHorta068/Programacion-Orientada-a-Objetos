@@ -1,4 +1,6 @@
 package org.deneb.tp4.ejercicio3;
+import org.deneb.stylusUI.StylusUI;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,8 +21,7 @@ public class ConversorTemperatura extends JFrame {
 
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(350, 150);
-        setLayout(new GridLayout(3, 2));
+        setLayout(new GridLayout(2, 2));
 
         campoTemperatura1 = new JTextField();
         campoTemperatura2 = new JTextField();
@@ -64,8 +65,13 @@ public class ConversorTemperatura extends JFrame {
         add(comboBox1);
         add(comboBox2);
 
+        StylusUI.aplicarEstiloComboBox(comboBox1);
+        StylusUI.aplicarEstiloComboBox(comboBox2);
+        StylusUI.aplicarEstiloCampoTexto(campoTemperatura1);
+        StylusUI.aplicarEstiloCampoTexto(campoTemperatura2);
         // Mostrar la ventana
         setVisible(true);
+        pack();
     }
 
     private void convertirTemperatura(boolean esPrimero) {

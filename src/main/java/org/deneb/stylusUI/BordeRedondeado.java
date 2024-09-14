@@ -1,4 +1,4 @@
-package org.deneb.tp4.ejercicio4.stylusUI;
+package org.deneb.stylusUI;
 
 import javax.swing.border.Border;
 import java.awt.*;

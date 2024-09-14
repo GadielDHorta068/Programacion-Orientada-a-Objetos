@@ -6,8 +6,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.deneb.tp4.ejercicio4.stylusUI.StylusUI;
-import org.deneb.tp4.ejercicio5.employee.Employee;
+import org.deneb.stylusUI.SlidingDialog;
+import org.deneb.stylusUI.StylusUI;
 import org.deneb.tp4.ejercicio5.employee.SalariedEmployee;
 
 public class TablaWindow extends JFrame {
@@ -45,15 +45,12 @@ public class TablaWindow extends JFrame {
         JButton addButton = new JButton("Agregar");
         StylusUI.aplicarEstiloBoton(addButton);
         addButton.addActionListener(e -> {
-            Form form = new Form(getEmployees(), this);  //referencia a TablaWindow
+            Form form = new Form(getEmployees(), this);
             form.setVisible(true);
         });
         buttonPanel.add(addButton);
 
-        add(buttonPanel, BorderLayout.SOUTH); // Añadir el panel de botones al sur
-
-        // Colores de fondo del frame
-//        getContentPane().setBackground(backgroundColor);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(600, 400);
@@ -86,10 +83,12 @@ public class TablaWindow extends JFrame {
             if (employee != null) {
                 employees.remove(employee);
                 tableModel.removeRow(selectedRow);
-                JOptionPane.showMessageDialog(this, "Empleado eliminado exitosamente");
+               JOptionPane.showMessageDialog(this, "Empleado eliminado exitosamente");
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Seleccione un empleado para eliminar");
+        ///    JOptionPane.showMessageDialog(this, "Seleccione un empleado para eliminar");
+            SlidingDialog dialog = new SlidingDialog(this, "Mensaje", "sdsds");
+            dialog.setVisible(true);
         }
     }
 

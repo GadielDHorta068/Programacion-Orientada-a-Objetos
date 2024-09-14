@@ -1,7 +1,7 @@
 package org.deneb.tp4.ejercicio5;
 
+import org.deneb.stylusUI.StylusUI;
 import org.deneb.tp4.ejercicio5.employee.SalariedEmployee;
-import org.deneb.tp4.ejercicio4.stylusUI.StylusUI;
 
 import javax.swing.*;
 import java.awt.*;

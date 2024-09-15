@@ -26,15 +26,14 @@ public class Form extends JFrame {
         super("Gestionar Empleado Asalariado");
         this.employeeTableWindow = tableWindow;
 
-        // Eliminar decoración de la ventana
         setUndecorated(true);
 
         setLayout(new GridBagLayout());
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
-
-        // Aplicar estilo a la ventana
         StylusUI.aplicarEstiloPanel((JPanel) getContentPane());
+
 
         // Comienzo construcción grilla
         gbc.gridx = 0;

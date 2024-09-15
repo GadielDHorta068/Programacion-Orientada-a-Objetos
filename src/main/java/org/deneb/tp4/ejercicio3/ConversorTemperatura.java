@@ -122,6 +122,7 @@ public class ConversorTemperatura extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        StylusUI.inicializar();
         SwingUtilities.invokeLater(ConversorTemperatura::new);
     }
 }

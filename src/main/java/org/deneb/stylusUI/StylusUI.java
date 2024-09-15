@@ -12,11 +12,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 public class StylusUI {
     // Colores oscuros inspirados en Material UI y Ubuntu
-    public static final Color COLOR_PRIMARIO = new Color(47, 51, 58);  // Pantone 433 C (Gris oscuro)
+    public static final Color COLOR_PRIMARIO = new Color(38, 41, 48);  // Pantone 433 C (Gris oscuro)
     public static final Color COLOR_SECUNDARIO = new Color(0, 91, 173); // Pantone 7687 C (Azul profundo)
     public static final Color COLOR_FONDO_BOTON = new Color(51, 63, 72); // Pantone 7546 C (Gris azulado)
     public static final Color COLOR_TEXTO = Color.WHITE; // Mantiene el blanco puro
@@ -27,7 +29,7 @@ public class StylusUI {
     private static final Color ERROR_COLOR = Color.RED; // Color para errores (sin cambios)
     private static final int PADDING_HORIZONTAL = 2; // Espacio extra en los botones
     private static final Color BUTTON_BACKGROUND_COLOR = new Color(51, 63, 72); // Pantone 7546 C (Gris azulado)
-    private static final String NAME_BUTTON_SOUND = "boton.wav";
+    private static final String NAME_BUTTON_SOUND = "/boton.wav";
     private static final Color BUTTON_HOVER_COLOR = BUTTON_BACKGROUND_COLOR.darker();
     private static final Color BUTTON_PRESSED_COLOR = BUTTON_BACKGROUND_COLOR.brighter();
 
@@ -37,7 +39,7 @@ public class StylusUI {
 
     static {
         try {
-            URL fuenteURL = StylusUI.class.getResource("/FiraMonoNerdFontMono-Regular.otf");
+            URL fuenteURL = StylusUI.class.getResource("/FiraMonoNerdFont-Medium.otf");
             if (fuenteURL == null) {
                 throw new IOException("No se pudo encontrar la fuente en la URL especificada.");
             }
@@ -58,12 +60,11 @@ public class StylusUI {
                 UIManager.put("CheckBox.font", FUENTE_TEXTO);
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Imprimir el error para verificar problemas con la carga de la fuente
+            e.printStackTrace();
             FUENTE_TEXTO = new Font("SansSerif", Font.PLAIN, 14);
             FUENTE_TITULO = new Font("SansSerif", Font.BOLD, 16);
         }
     }
-
 
     /**
      * Esta clase recibe un boton como parametro y le aplica toda la configuracion personalizada que deseemos
@@ -78,47 +79,27 @@ public class StylusUI {
 
         // Ajustar márgenes muy pequeños para hacer el botón más compacto
         boton.setMargin(new Insets(2, 5, 2, 5));
-        boton.setPreferredSize(new Dimension(80, 30));  // Tamaño ajustado, me quedaba muy grande
+        boton.setPreferredSize(new Dimension(85, 35));  // Tamaño ajustado, me quedaba muy grande
         boton.setContentAreaFilled(true);  // Mantener el relleno
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         // Ajustar tamaño al contenido del texto del botón
         Dimension preferredSize = boton.getPreferredSize();
         preferredSize.width += PADDING_HORIZONTAL * 2; // Añadir espacio horizontal adicional
         boton.setPreferredSize(preferredSize);
 
-        // Añadir eventos para cambiar el color al pasar el mouse y al presionar
-        boton.addMouseListener(new MouseAdapter() {
+        boton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
-            public void mouseEntered(MouseEvent e) {
-                // Cambiar el color de fondo cuando el mouse está encima (hover)
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
                 boton.setBackground(COLOR_HOVER_BOTON);
             }
 
             @Override
-            public void mouseExited(MouseEvent e) {
-                // Volver al color original cuando el mouse sale del botón
-                boton.setBackground(COLOR_FONDO_BOTON);
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                // Cambiar el color cuando el botón es presionado
+            public void mouseExited(java.awt.event.MouseEvent evt) {
                 boton.setBackground(COLOR_PRESIONADO_BOTON);
-
-                // Reproducir sonido al presionar el botón
-                reproducirSonido();
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                // Volver al color de hover o al color original cuando se suelta el botón
-                if (boton.getBounds().contains(e.getPoint())) {
-                    boton.setBackground(COLOR_HOVER_BOTON);
-                } else {
-                    boton.setBackground(COLOR_FONDO_BOTON);
-                }
             }
         });
+        boton.setFont(boton.getFont().deriveFont(Font.BOLD));
     }
 
     /**
@@ -147,7 +128,7 @@ public class StylusUI {
         // Estilo de la tabla
         tabla.setBackground(COLOR_PRIMARIO);  // Fondo de la tabla
         tabla.setForeground(COLOR_TEXTO);     // Color del texto
-        tabla.setFont(FUENTE_TEXTO);          // Fuente del texto
+        tabla.setFont(FUENTE_TEXTO.deriveFont(Font.PLAIN, 12f));  // Fuente del texto sin negrita
 
         // Si la tabla está vacía, asegurarse de que el fondo siga siendo oscuro
         tabla.setFillsViewportHeight(true);   // Llenar el área de la tabla, incluso cuando está vacía
@@ -223,6 +204,7 @@ public class StylusUI {
      */
     public static void aplicarEstiloDialogo(JDialog dialog) {
         dialog.getContentPane().setBackground(DARK_BACKGROUND_COLOR);
+        dialog.setFont(FUENTE_TEXTO);
 
         // Aplicar estilo a los componentes dentro del diálogo
         for (Component component : dialog.getContentPane().getComponents()) {
@@ -367,6 +349,87 @@ public class StylusUI {
             protected void paintTabBorder(Graphics g, int tabPlacement, int tabIndex, int x, int y, int w, int h, boolean isSelected) {
                 g.setColor(COLOR_SECUNDARIO.darker());
                 g.drawRect(x, y, w, h);
+            }
+        });
+    }
+//  No funciona bien, es una cuestion de renders quiero creer
+    public static void aplicarEstilosGlobales() {
+        // Colores y estilos globales
+        UIManager.put("Button.background", COLOR_FONDO_BOTON);
+        UIManager.put("Button.foreground", COLOR_TEXTO);
+        UIManager.put("Button.font", FUENTE_TEXTO);
+        UIManager.put("Button.border", new BordeRedondeado(10)); // Borde redondeado global
+        UIManager.put("Button.hover", COLOR_HOVER_BOTON);
+        UIManager.put("Button.pressed", COLOR_PRESIONADO_BOTON);
+
+        UIManager.put("Label.font", FUENTE_TEXTO);
+        UIManager.put("Label.foreground", COLOR_TEXTO);
+
+        UIManager.put("TextField.background", DARK_BACKGROUND_COLOR);
+        UIManager.put("TextField.foreground", TEXT_COLOR);
+        UIManager.put("TextField.font", FUENTE_TEXTO);
+        UIManager.put("TextField.caretForeground", TEXT_COLOR);
+
+        UIManager.put("Table.background", COLOR_PRIMARIO);
+        UIManager.put("Table.foreground", COLOR_TEXTO);
+        UIManager.put("Table.font", FUENTE_TEXTO);
+        UIManager.put("Table.gridColor", COLOR_SECUNDARIO);
+
+        UIManager.put("TableHeader.background", COLOR_SECUNDARIO);
+        UIManager.put("TableHeader.foreground", COLOR_TEXTO);
+        UIManager.put("TableHeader.font", FUENTE_TITULO);
+
+        UIManager.put("ScrollBar.background", COLOR_PRIMARIO);
+        UIManager.put("ScrollBar.foreground", COLOR_TEXTO);
+
+        // Aplicar estilo a JComboBox
+        UIManager.put("ComboBox.background", DARK_BACKGROUND_COLOR);
+        UIManager.put("ComboBox.foreground", TEXT_COLOR);
+        UIManager.put("ComboBox.font", FUENTE_TEXTO);
+        UIManager.put("ComboBox.selectionBackground", COLOR_SECUNDARIO);
+        UIManager.put("ComboBox.selectionForeground", COLOR_TEXTO);
+
+        // Aplicar estilo a JComboBox Editor (cuando se edita el texto del combo)
+        UIManager.put("ComboBox.editorBackground", DARK_BACKGROUND_COLOR);
+        UIManager.put("ComboBox.editorForeground", TEXT_COLOR);
+
+        // Aplicar otros estilos necesarios
+        aplicarEstiloJOptionPane();
+    }
+
+    /**
+     * Ajusta el tamaño del texto y la ventana en un JDialog para que se adapte al contenido.
+     * @param dialog El JDialog a ajustar.
+     * @param texto El texto que se mostrará en el diálogo.
+     */
+    public static void ajustarDialogo(JDialog dialog, String texto) {
+        // Crear un JLabel con el texto proporcionado
+        JLabel label = new JLabel(texto);
+        label.setFont(FUENTE_TEXTO); // Aplicar fuente personalizada
+
+        // Ajustar el diseño del JDialog para que se ajuste al texto
+        dialog.getContentPane().setLayout(new BorderLayout());
+        dialog.getContentPane().add(label, BorderLayout.CENTER);
+
+        // Ajustar el tamaño del diálogo al contenido
+        dialog.pack();
+        dialog.setLocationRelativeTo(null); // Centrar el diálogo en la pantalla
+    }
+
+    public static void inicializar() {
+        aplicarEstilosGlobales();
+        configurarRickrolleo();
+    }
+
+    private static void configurarRickrolleo(){
+        Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
+            System.err.println(STR."Se ha producido una excepción no manejada: \{throwable.getMessage()}");
+            try {
+                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+                }
+            } catch (IOException | URISyntaxException e) {
+                System.err.println(STR."Error al intentar abrir el enlace: \{e.getMessage()}");
             }
         });
     }

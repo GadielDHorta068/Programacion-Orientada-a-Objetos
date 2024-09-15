@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.deneb.stylusUI.MacOSWindowButtons;
 import org.deneb.stylusUI.SlidingDialog;
 import org.deneb.stylusUI.StylusUI;
 import org.deneb.tp4.ejercicio5.employee.SalariedEmployee;
@@ -19,19 +20,28 @@ public class TablaWindow extends JFrame {
     public TablaWindow() {
         super("Lista de Empleados");
         setLayout(new BorderLayout());
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);  // Elimina la decoración del sistema
+        setUndecorated(true);
+        MacOSWindowButtons macButtons = new MacOSWindowButtons(this);
+        add(macButtons, BorderLayout.NORTH);
         employees = new ArrayList<>();
 
-        employees.add(new SalariedEmployee("Ana", "García", "123-45-6789", 500.0, LocalDate.of(1990, 8, 22)));
-        employees.add(new SalariedEmployee("Luis", "Pérez", "987-65-4321", 600.0, LocalDate.of(1990, 8, 22)));
-        employees.add(new SalariedEmployee("María", "Rodríguez", "456-78-9012", 550.0, LocalDate.of(1988, 11, 30)));
-
+        employees.add(new SalariedEmployee("Carlos", "Fernández", "321-54-9876", 520.0, LocalDate.of(1985, 5, 15)));
+        employees.add(new SalariedEmployee("Lucía", "Gómez", "654-32-1987", 580.0, LocalDate.of(1992, 3, 18)));
+        employees.add(new SalariedEmployee("Juan", "Martínez", "789-01-2345", 610.0, LocalDate.of(1989, 7, 9)));
+        employees.add(new SalariedEmployee("Elena", "Díaz", "234-56-7890", 540.0, LocalDate.of(1991, 12, 12)));
+        employees.add(new SalariedEmployee("Javier", "Ruiz", "543-21-8765", 595.0, LocalDate.of(1987, 4, 25)));
+        employees.add(new SalariedEmployee("Marta", "Sánchez", "876-54-3210", 560.0, LocalDate.of(1993, 9, 10)));
+        employees.add(new SalariedEmployee("Pedro", "Hernández", "098-76-5432", 630.0, LocalDate.of(1986, 6, 20)));
+        employees.add(new SalariedEmployee("Laura", "Lopez", "112-23-3445", 570.0, LocalDate.of(1994, 2, 2)));
+        employees.add(new SalariedEmployee("David", "Ortiz", "223-34-4556", 620.0, LocalDate.of(1990, 11, 1)));
+        employees.add(new SalariedEmployee("Sofía", "Moreno", "334-45-5667", 590.0, LocalDate.of(1988, 1, 15)));
 
         String[] columnNames = {"Nombre", "Apellido", "DNI", "Salario Semanal", "Fecha"};
         tableModel = new DefaultTableModel(columnNames, 0);
         employeeTable = new JTable(tableModel);
         StylusUI.aplicarEstiloTabla(employeeTable, true);
         actualizarTabla(employees);
-
 
         JScrollPane scrollPane = new JScrollPane(employeeTable);
         add(scrollPane, BorderLayout.CENTER);
@@ -89,10 +99,10 @@ public class TablaWindow extends JFrame {
             if (employee != null) {
                 employees.remove(employee);
                 tableModel.removeRow(selectedRow);
-               JOptionPane.showMessageDialog(this, "Empleado eliminado exitosamente");
+                SlidingDialog dialog = new SlidingDialog(this, "Mensaje", "Empleado eliminado");
+                dialog.setVisible(true);
             }
         } else {
-        ///    JOptionPane.showMessageDialog(this, "Seleccione un empleado para eliminar");
             SlidingDialog dialog = new SlidingDialog(this, "Mensaje", "Seleccione un empleado para eliminar");
             dialog.setVisible(true);
         }
@@ -103,8 +113,8 @@ public class TablaWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        StylusUI.aplicarEstiloJOptionPane();
         List<SalariedEmployee> employees = new ArrayList<>();
+        StylusUI.inicializar();
         new TablaWindow();
     }
 

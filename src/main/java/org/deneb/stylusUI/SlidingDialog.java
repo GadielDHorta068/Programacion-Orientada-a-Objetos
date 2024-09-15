@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SlidingDialog extends JDialog {
-    private static final int ANIMATION_DURATION = 100; // Duración de la animación en milisegundos
+    private static final int ANIMATION_DURATION = 75; // Duración de la animación en milisegundos
     private static final int STEP_SIZE = 10; // Tamaño del paso en píxeles
 
     public SlidingDialog(JFrame parentFrame, String title, String message) {
@@ -14,17 +14,21 @@ public class SlidingDialog extends JDialog {
         setLayout(new BorderLayout());
         // Aplicar el estilo de StylusUI
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(StylusUI.COLOR_PRIMARIO);
+        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+        setUndecorated(true);
+        MacOSWindowButtons macButtons = new MacOSWindowButtons(null);
+        add(macButtons, BorderLayout.NORTH);
+
+        panel.setBackground(StylusUI.COLOR_PRIMARIO.darker());
         JLabel messageLabel = new JLabel(message, SwingConstants.CENTER);
-        StylusUI.aplicarEstiloEtiqueta(messageLabel); // Aplicar estilo de etiqueta
+        StylusUI.aplicarEstiloEtiqueta(messageLabel);
         panel.add(messageLabel, BorderLayout.CENTER);
-        StylusUI.aplicarFondoTranslucido(panel,60);
 
 
 
         // Crear un panel para el botón
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        buttonPanel.setBackground(StylusUI.COLOR_PRIMARIO);
+        buttonPanel.setBackground(StylusUI.COLOR_PRIMARIO.darker());
 
         JButton btnAceptar = new JButton("Aceptar");
         StylusUI.aplicarEstiloBoton(btnAceptar);
@@ -41,7 +45,7 @@ public class SlidingDialog extends JDialog {
         add(panel, BorderLayout.CENTER);
         StylusUI.aplicarEstiloPanel((JPanel) getContentPane()); // Aplicar estilo al panel del diálogo
 
-        setSize(300, 150);
+        setSize(320, 120);
         setLocationRelativeTo(parentFrame);
 
         // Inicializar posición de la ventana fuera de la pantalla
@@ -68,6 +72,7 @@ public class SlidingDialog extends JDialog {
         });
         timer.setInitialDelay(0);
         timer.start();
+
 
     }
 

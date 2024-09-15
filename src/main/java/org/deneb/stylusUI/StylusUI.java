@@ -20,6 +20,7 @@ public class StylusUI {
     // Colores oscuros inspirados en Material UI y Ubuntu
     public static final Color COLOR_PRIMARIO = new Color(38, 41, 48);  // Pantone 433 C (Gris oscuro)
     public static final Color COLOR_SECUNDARIO = new Color(0, 91, 173); // Pantone 7687 C (Azul profundo)
+    public static final Color COLOR_TERCIARIO = new Color(5, 5, 117, 249); // Pantone Black 7 C (Negro ahumado)
     public static final Color COLOR_FONDO_BOTON = new Color(51, 63, 72); // Pantone 7546 C (Gris azulado)
     public static final Color COLOR_TEXTO = Color.WHITE; // Mantiene el blanco puro
     public static final Color COLOR_HOVER_BOTON = new Color(132, 146, 156); // Pantone 7544 C (Gris medio)

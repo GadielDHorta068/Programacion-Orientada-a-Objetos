@@ -33,6 +33,7 @@ public class Form extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         StylusUI.aplicarEstiloPanel((JPanel) getContentPane());
+        getContentPane().setBackground(StylusUI.COLOR_TERCIARIO);
 
 
         // Comienzo construcción grilla

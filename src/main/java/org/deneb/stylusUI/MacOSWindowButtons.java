@@ -9,7 +9,7 @@ public class MacOSWindowButtons extends JPanel {
     private Point initialClick;
 
     public MacOSWindowButtons(JFrame frame) {
-        setLayout(new BorderLayout());  // Cambiar a BorderLayout para colocar el título y los botones en distintas regiones
+        setLayout(new BorderLayout());
 
         // Crear un panel para los botones
         JPanel buttonPanel = new JPanel();
@@ -60,7 +60,12 @@ public class MacOSWindowButtons extends JPanel {
                 }
             });
         } else {
-            closeButton.addActionListener(e -> System.exit(0)); // Encontrar la manera de destruir el parent que lo contenga
+            closeButton.addActionListener(e -> {
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
+            });
             buttonPanel.add(closeButton);
             add(buttonPanel, BorderLayout.EAST);
         }

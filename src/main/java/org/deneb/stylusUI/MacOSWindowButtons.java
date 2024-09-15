@@ -2,6 +2,8 @@ package org.deneb.stylusUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -24,7 +26,15 @@ public class MacOSWindowButtons extends JPanel {
         if (frame != null) {
             closeButton.addActionListener(e -> System.exit(0));
             minimizeButton.addActionListener(e -> frame.setState(Frame.ICONIFIED));
-            maximizeButton.addActionListener(e -> frame.setExtendedState(frame.getExtendedState() ^ Frame.MAXIMIZED_BOTH));
+
+            // Agregar la animación de maximización/restauración
+            maximizeButton.addActionListener(e -> {
+                if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
+                    animateRestore(frame);
+                } else {
+                    animateMaximize(frame);
+                }
+            });
 
             buttonPanel.add(closeButton);
             buttonPanel.add(minimizeButton);
@@ -69,6 +79,73 @@ public class MacOSWindowButtons extends JPanel {
             buttonPanel.add(closeButton);
             add(buttonPanel, BorderLayout.EAST);
         }
+    }
+
+    /**
+     * Método para animar la maximización de la ventana
+     */
+    private void animateMaximize(JFrame frame) {
+        Rectangle startBounds = frame.getBounds();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle targetBounds = new Rectangle(0, 0, screenSize.width, screenSize.height);
+
+        animateWindow(frame, startBounds, targetBounds);
+    }
+
+    /**
+     * Método para animar la restauración de la ventana
+     */
+    private void animateRestore(JFrame frame) {
+        Rectangle startBounds = frame.getBounds();
+        Rectangle targetBounds = new Rectangle(100, 100, 800, 600); // Tamaño y posición originales o deseadas
+
+        animateWindow(frame, startBounds, targetBounds);
+    }
+
+    /**
+     * Método genérico para animar el cambio de tamaño de la ventana
+     */
+    private void animateWindow(JFrame frame, Rectangle startBounds, Rectangle targetBounds) {
+        int animationDuration = 100; // Duración de la animación en milisegundos
+        int steps = 10; // Número de pasos de la animación
+        int delay = animationDuration / steps;
+
+        Timer timer = new Timer(delay, null);
+        ActionListener animationStep = new ActionListener() {
+            int step = 0;
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (step >= steps) {
+                    timer.stop();
+                    // Establecer el estado final de la ventana (maximizado/restaurado)
+                    if (targetBounds.width == Toolkit.getDefaultToolkit().getScreenSize().width) {
+                        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    } else {
+                        frame.setBounds(targetBounds);
+                    }
+                    return;
+                }
+
+                // Interpolación entre los límites iniciales y los finales
+                int newX = interpolate(startBounds.x, targetBounds.x, step, steps);
+                int newY = interpolate(startBounds.y, targetBounds.y, step, steps);
+                int newWidth = interpolate(startBounds.width, targetBounds.width, step, steps);
+                int newHeight = interpolate(startBounds.height, targetBounds.height, step, steps);
+
+                frame.setBounds(newX, newY, newWidth, newHeight);
+                step++;
+            }
+        };
+        timer.addActionListener(animationStep);
+        timer.start();
+    }
+
+    /**
+     * Función de interpolación para calcular el valor intermedio en cada paso de la animación
+     */
+    private int interpolate(int startValue, int endValue, int step, int totalSteps) {
+        return startValue + ((endValue - startValue) * step) / totalSteps;
     }
 
     /**

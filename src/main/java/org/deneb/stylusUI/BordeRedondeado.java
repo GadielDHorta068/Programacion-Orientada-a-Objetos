@@ -23,7 +23,7 @@ public class BordeRedondeado implements Border {
 
     @Override
     public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.setColor(c.getForeground());
+        g.setColor(c.getForeground()); //Cambiar el color al contorno del boton
         g.drawRoundRect(x, y, width - 1, height - 1, radio, radio);
     }
 }

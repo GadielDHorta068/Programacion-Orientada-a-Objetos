@@ -31,7 +31,7 @@ public class SlidingDialog extends JDialog {
         buttonPanel.setBackground(StylusUI.COLOR_PRIMARIO.darker());
 
         JButton btnAceptar = new JButton("Aceptar");
-        StylusUI.aplicarEstiloBoton(btnAceptar);
+        StylusUI.aplicarEstiloBoton(btnAceptar, true);
         btnAceptar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

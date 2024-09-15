@@ -17,14 +17,16 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 public class StylusUI {
-    // Colores oscuros inspirados en Material UI y Ubuntu
+    // Colores oscuros inspirados en Material UI, IOS , Ubuntu
+    //Las variables publicas estaran disponibles para que otras clases puedan obtener el color
     public static final Color COLOR_PRIMARIO = new Color(38, 41, 48);  // Pantone 433 C (Gris oscuro)
     public static final Color COLOR_SECUNDARIO = new Color(0, 91, 173); // Pantone 7687 C (Azul profundo)
-    public static final Color COLOR_TERCIARIO = new Color(5, 5, 117, 249); // Pantone Black 7 C (Negro ahumado)
+    public static final Color COLOR_TERCIARIO = new Color(3, 3, 65, 249);//Mejorar este tono
     public static final Color COLOR_FONDO_BOTON = new Color(51, 63, 72); // Pantone 7546 C (Gris azulado)
-    public static final Color COLOR_TEXTO = Color.WHITE; // Mantiene el blanco puro
+    public static final Color COLOR_TEXTO = new Color(240,240,240); // Menos blanco par reducir contraste
     public static final Color COLOR_HOVER_BOTON = new Color(132, 146, 156); // Pantone 7544 C (Gris medio)
     public static final Color COLOR_PRESIONADO_BOTON = new Color(60, 75, 83); // Pantone 7545 C (Gris profundo)
+
     private static final Color DARK_BACKGROUND_COLOR = new Color(55, 54, 54); // Pantone Black 7 C (Negro ahumado)
     private static final Color TEXT_COLOR = new Color(230, 230, 230); // Color del texto
     private static final Color ERROR_COLOR = Color.RED; // Color para errores (sin cambios)
@@ -70,19 +72,23 @@ public class StylusUI {
     /**
      * Esta clase recibe un boton como parametro y le aplica toda la configuracion personalizada que deseemos
      * @param boton boton a ser alterado
+     * @param relleno true si el boton sera solo texto y el resto de sus componentes transparente
      */
-    public static void aplicarEstiloBoton(JButton boton) {
+    public static void aplicarEstiloBoton(JButton boton, Boolean relleno) {
         boton.setBackground(COLOR_FONDO_BOTON);
         boton.setForeground(COLOR_TEXTO);
         boton.setFont(FUENTE_TEXTO.deriveFont(12f));  // Tamaño de fuente reducido
+        boton.setFont(boton.getFont().deriveFont(Font.BOLD)); // Bold para mas volumen(?
         boton.setFocusPainted(false);
         boton.setBorder(new BordeRedondeado(10));  // Borde redondeado más pequeño
-
         // Ajustar márgenes muy pequeños para hacer el botón más compacto
-        boton.setMargin(new Insets(2, 5, 2, 5));
+        boton.setMargin(new Insets(2, 5, 2, 5));    //Esto hace que el boton tenga mas "tamaño"
         boton.setPreferredSize(new Dimension(85, 35));  // Tamaño ajustado, me quedaba muy grande
-        boton.setContentAreaFilled(true);  // Mantener el relleno
-        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        boton.setContentAreaFilled(relleno);  // Mantener el relleno, caso contrario logramos hacer un boton "transparente" con texto legible
+       if (!relleno){
+           boton.setBorder(null);
+       }
+        boton.setCursor(new Cursor(Cursor.HAND_CURSOR));    //HandCursor hace que al poner el mouse sobre un boton cambie a "la manito"
 
         // Ajustar tamaño al contenido del texto del botón
         Dimension preferredSize = boton.getPreferredSize();
@@ -92,15 +98,22 @@ public class StylusUI {
         boton.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                boton.setBackground(COLOR_HOVER_BOTON);
+                if (!relleno){
+                    boton.setForeground(COLOR_HOVER_BOTON);
+                }else{
+                    boton.setBackground(COLOR_HOVER_BOTON);
+                }
             }
 
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                boton.setBackground(COLOR_PRESIONADO_BOTON);
+                if (!relleno){
+                    boton.setForeground(COLOR_TEXTO);
+                }else{
+                    boton.setBackground(COLOR_FONDO_BOTON);
+                }
             }
         });
-        boton.setFont(boton.getFont().deriveFont(Font.BOLD));
     }
 
     /**
@@ -121,17 +134,14 @@ public class StylusUI {
     }
 
     /**
-     * Recibe una tabla y se le cambian mucho aspectos de la misma
+     * Recibe una tabla y se le cambian los aspectos de la misma
      * @param tabla tabla a ser tratada
-     * @param reajustar si es verdadero, se ajustara el largo de las columnas al largo del texto que las contenga
+     * @param reajustar si es verdadero, se ajustara el largo de las columnas al largo del texto del titulo que las contenga
      */
     public static void aplicarEstiloTabla(JTable tabla, boolean reajustar) {
-        // Estilo de la tabla
         tabla.setBackground(COLOR_PRIMARIO);  // Fondo de la tabla
         tabla.setForeground(COLOR_TEXTO);     // Color del texto
         tabla.setFont(FUENTE_TEXTO.deriveFont(Font.PLAIN, 12f));  // Fuente del texto sin negrita
-
-        // Si la tabla está vacía, asegurarse de que el fondo siga siendo oscuro
         tabla.setFillsViewportHeight(true);   // Llenar el área de la tabla, incluso cuando está vacía
 
         JTableHeader cabecera = tabla.getTableHeader();
@@ -159,7 +169,6 @@ public class StylusUI {
                 return c;
             }
         });
-
         if (reajustar){
             ajustarAnchoColumnas(tabla);
         }
@@ -216,7 +225,7 @@ public class StylusUI {
             } else if (component instanceof JTextField) {
                 aplicarEstiloCampoTexto((JTextField) component);
             } else if (component instanceof JButton) {
-                aplicarEstiloBoton((JButton) component);
+                aplicarEstiloBoton((JButton) component, true);
             }
         }
 
@@ -228,14 +237,7 @@ public class StylusUI {
      * Testear mejor, agarra los componentes de un Joptionpane comun usado en clase y quizas falten elementos
      */
     public static void aplicarEstiloJOptionPane() {
-        UIManager.put("OptionPane.background", DARK_BACKGROUND_COLOR);
-        UIManager.put("Panel.background", DARK_BACKGROUND_COLOR);
-        UIManager.put("OptionPane.messageForeground", TEXT_COLOR);
-        UIManager.put("Button.background", BUTTON_BACKGROUND_COLOR);
-        UIManager.put("Button.foreground", TEXT_COLOR);
-        UIManager.put("Button.font", FUENTE_TEXTO.deriveFont(14f)); // Actualizar con fuente personalizada
-        UIManager.put("Button.border", BorderFactory.createLineBorder(TEXT_COLOR));
-        UIManager.put("OptionPane.buttonFont", FUENTE_TEXTO.deriveFont(14f)); // Actualizar con fuente personalizada
+
     }
 
     /**
@@ -256,11 +258,16 @@ public class StylusUI {
             System.err.println(STR."Error al reproducir el sonido: \{e.getMessage()}");
         }
     }
+
+    /**
+     * Configura el estilo de la interfaz a los combobox
+     * @param comboBox combobox a ser personalizado
+     */
     public static void aplicarEstiloComboBox(JComboBox<?> comboBox) {
         comboBox.setBackground(DARK_BACKGROUND_COLOR);
         comboBox.setForeground(TEXT_COLOR);
         comboBox.setFont(FUENTE_TEXTO);
-        comboBox.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
+        comboBox.setBorder(BorderFactory.createLineBorder(TEXT_COLOR)); ///Cambiar esto, no mgggg
 
         // Estilo de los ítems desplegados
         comboBox.setUI(new javax.swing.plaf.basic.BasicComboBoxUI() {
@@ -274,6 +281,10 @@ public class StylusUI {
         });
     }
 
+    /**
+     * Personaliza los scrollpanes para que este en armonia con la UI
+     * @param scrollPane
+     */
     public static void aplicarEstiloScrollPane(JScrollPane scrollPane) {
         scrollPane.getViewport().setBackground(DARK_BACKGROUND_COLOR);
         scrollPane.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
@@ -292,18 +303,27 @@ public class StylusUI {
         horizontalBar.setPreferredSize(new Dimension(Integer.MAX_VALUE, 12));
     }
 
-    public static void aplicarEstiloProgressBar(JProgressBar progressBar) {
+    /**
+     * Estiliza la barra de progreso
+     * @param progressBar Objeto a ser personalizado
+     */
+    public static void aplicarEstiloProgressBar(JProgressBar progressBar, Boolean textoBarra) {
         progressBar.setBackground(DARK_BACKGROUND_COLOR);
-        progressBar.setForeground(COLOR_SECUNDARIO); // Color del progreso
+        progressBar.setForeground(COLOR_SECUNDARIO); // Color del progreso, el progreso no sera detenido. RAINBOWWWWWW PLZ
         progressBar.setFont(FUENTE_TEXTO);
         progressBar.setBorder(BorderFactory.createLineBorder(TEXT_COLOR));
 
         // Texto sobre la barra de progreso (opcional)
-        progressBar.setStringPainted(true);
+        progressBar.setStringPainted(textoBarra);
         progressBar.setString("Maldito Ilon Mosc"); // O el texto que prefieras
     }
 
+    /**
+     * Estiliza los botones radio
+     * @param radioButton objeto a ser tratado
+     */
     public static void aplicarEstiloRadioButton(JRadioButton radioButton) {
+        //Sin utilidad por ahora
         radioButton.setBackground(DARK_BACKGROUND_COLOR);
         radioButton.setForeground(TEXT_COLOR);
         radioButton.setFont(FUENTE_TEXTO);
@@ -313,6 +333,10 @@ public class StylusUI {
         radioButton.setSelectedIcon(new javax.swing.ImageIcon("ruta/iconoSeleccionado.png"));
     }
 
+    /**
+     * Personalizar checkboxes
+     * @param checkBox objeto a personalizar
+     */
     public static void aplicarEstiloCheckBox(JCheckBox checkBox) {
         checkBox.setBackground(DARK_BACKGROUND_COLOR);
         checkBox.setForeground(TEXT_COLOR);
@@ -323,6 +347,10 @@ public class StylusUI {
         checkBox.setSelectedIcon(new javax.swing.ImageIcon("ruta/iconoSeleccionado.png"));
     }
 
+    /**
+     * Personalizar Tabs
+     * @param tabbedPane objeto a tratar
+     */
     public static void aplicarEstiloTabbedPane(JTabbedPane tabbedPane) {
         tabbedPane.setBackground(DARK_BACKGROUND_COLOR);
         tabbedPane.setForeground(TEXT_COLOR);
@@ -353,13 +381,14 @@ public class StylusUI {
             }
         });
     }
-//  No funciona bien, es una cuestion de renders quiero creer
+
+//  No funciona bien, tengo que econtrar manera de pasar la clase y que trate automaticamente todos los elementos
     public static void aplicarEstilosGlobales() {
         // Colores y estilos globales
         UIManager.put("Button.background", COLOR_FONDO_BOTON);
         UIManager.put("Button.foreground", COLOR_TEXTO);
         UIManager.put("Button.font", FUENTE_TEXTO);
-        UIManager.put("Button.border", new BordeRedondeado(10)); // Borde redondeado global
+        UIManager.put("Button.border", new BordeRedondeado(10));
         UIManager.put("Button.hover", COLOR_HOVER_BOTON);
         UIManager.put("Button.pressed", COLOR_PRESIONADO_BOTON);
 
@@ -383,19 +412,23 @@ public class StylusUI {
         UIManager.put("ScrollBar.background", COLOR_PRIMARIO);
         UIManager.put("ScrollBar.foreground", COLOR_TEXTO);
 
-        // Aplicar estilo a JComboBox
         UIManager.put("ComboBox.background", DARK_BACKGROUND_COLOR);
         UIManager.put("ComboBox.foreground", TEXT_COLOR);
         UIManager.put("ComboBox.font", FUENTE_TEXTO);
         UIManager.put("ComboBox.selectionBackground", COLOR_SECUNDARIO);
         UIManager.put("ComboBox.selectionForeground", COLOR_TEXTO);
 
-        // Aplicar estilo a JComboBox Editor (cuando se edita el texto del combo)
         UIManager.put("ComboBox.editorBackground", DARK_BACKGROUND_COLOR);
         UIManager.put("ComboBox.editorForeground", TEXT_COLOR);
 
-        // Aplicar otros estilos necesarios
-        aplicarEstiloJOptionPane();
+        UIManager.put("OptionPane.background", DARK_BACKGROUND_COLOR);
+        UIManager.put("Panel.background", DARK_BACKGROUND_COLOR);
+        UIManager.put("OptionPane.messageForeground", TEXT_COLOR);
+        UIManager.put("Button.background", BUTTON_BACKGROUND_COLOR);
+        UIManager.put("Button.foreground", TEXT_COLOR);
+        UIManager.put("Button.font", FUENTE_TEXTO.deriveFont(14f)); // Actualizar con fuente personalizada
+        UIManager.put("Button.border", BorderFactory.createLineBorder(TEXT_COLOR));
+        UIManager.put("OptionPane.buttonFont", FUENTE_TEXTO.deriveFont(14f)); // Actualizar con fuente personalizada
     }
 
     /**
@@ -417,11 +450,20 @@ public class StylusUI {
         dialog.setLocationRelativeTo(null); // Centrar el diálogo en la pantalla
     }
 
-    public static void inicializar() {
+    /**
+     * Metodo para inicializar variables globales
+     * @param rick true if you never gona give you up
+     */
+    public static void inicializar(boolean rick) {
         aplicarEstilosGlobales();
-        configurarRickrolleo();
+        if (rick){
+            configurarRickrolleo();
+        }
     }
 
+    /**
+     * never gona give you up
+     */
     private static void configurarRickrolleo(){
         Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {
             System.err.println(STR."Se ha producido una excepción no manejada: \{throwable.getMessage()}");

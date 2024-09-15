@@ -114,14 +114,14 @@ public class Form extends JFrame {
         add(nacimientoError, gbc);
 
         JButton addButton = new JButton("Agregar/Modificar");
-        StylusUI.aplicarEstiloBoton(addButton);
+        StylusUI.aplicarEstiloBoton(addButton, true);
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 1;
         add(addButton, gbc);
 
         JButton cancelButton = new JButton("Cancelar");
-        StylusUI.aplicarEstiloBoton(cancelButton);
+        StylusUI.aplicarEstiloBoton(cancelButton,true);
         gbc.gridx = 1;
         add(cancelButton, gbc);
 

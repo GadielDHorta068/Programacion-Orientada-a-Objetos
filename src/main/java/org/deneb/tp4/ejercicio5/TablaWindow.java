@@ -53,13 +53,13 @@ public class TablaWindow extends JFrame {
 
         // Botón para eliminar empleado
         JButton deleteButton = new JButton("Eliminar");
-        StylusUI.aplicarEstiloBoton(deleteButton);
+        StylusUI.aplicarEstiloBoton(deleteButton, false);
         deleteButton.addActionListener(e -> eliminarEmpleado(employees));
         buttonPanel.add(deleteButton);
 
         // Botón para agregar empleado
         JButton addButton = new JButton("Agregar");
-        StylusUI.aplicarEstiloBoton(addButton);
+        StylusUI.aplicarEstiloBoton(addButton, false);
         addButton.addActionListener(e -> {
             Form form = new Form(getEmployees(), this);
             form.setVisible(true);
@@ -114,7 +114,7 @@ public class TablaWindow extends JFrame {
 
     public static void main(String[] args) {
         List<SalariedEmployee> employees = new ArrayList<>();
-        StylusUI.inicializar();
+        StylusUI.inicializar(true);
         new TablaWindow();
     }
 

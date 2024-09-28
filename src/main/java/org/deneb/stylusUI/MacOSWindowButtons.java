@@ -13,21 +13,17 @@ public class MacOSWindowButtons extends JPanel {
     public MacOSWindowButtons(JFrame frame) {
         setLayout(new BorderLayout());
 
-        // Crear un panel para los botones
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-        // Crear botones
-        JButton closeButton = createCircleButton(Color.RED);
-        JButton minimizeButton = createCircleButton(Color.YELLOW);
-        JButton maximizeButton = createCircleButton(Color.GREEN);
+        JButton closeButton = createCircleButton(Color.RED, "×");
+        JButton minimizeButton = createCircleButton(Color.YELLOW, "-");
+        JButton maximizeButton = createCircleButton(Color.GREEN, "?");
 
-        // Añadir acciones a los botones
         if (frame != null) {
             closeButton.addActionListener(e -> System.exit(0));
             minimizeButton.addActionListener(e -> frame.setState(Frame.ICONIFIED));
 
-            // Agregar la animación de maximización/restauración
             maximizeButton.addActionListener(e -> {
                 if (frame.getExtendedState() == JFrame.MAXIMIZED_BOTH) {
                     animateRestore(frame);
@@ -118,7 +114,6 @@ public class MacOSWindowButtons extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 if (step >= steps) {
                     timer.stop();
-                    // Establecer el estado final de la ventana (maximizado/restaurado)
                     if (targetBounds.width == Toolkit.getDefaultToolkit().getScreenSize().width) {
                         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
                     } else {
@@ -127,7 +122,6 @@ public class MacOSWindowButtons extends JPanel {
                     return;
                 }
 
-                // Interpolación entre los límites iniciales y los finales
                 int newX = interpolate(startBounds.x, targetBounds.x, step, steps);
                 int newY = interpolate(startBounds.y, targetBounds.y, step, steps);
                 int newWidth = interpolate(startBounds.width, targetBounds.width, step, steps);
@@ -149,21 +143,28 @@ public class MacOSWindowButtons extends JPanel {
     }
 
     /**
-     * Suavizar los botones
-     * @param color color del boton
-     * @return Boton suavizados
+     * Crear un botón circular con texto dentro (como '×', '?' o '?')
+     * @param color Color del botón
+     * @param symbol Símbolo a mostrar dentro del botón
+     * @return Botón suavizado con símbolo
      */
-    private JButton createCircleButton(Color color) {
+    private JButton createCircleButton(Color color, String symbol) {
         JButton button = new JButton() {
             @Override
             protected void paintComponent(Graphics g) {
-                // Enable anti-aliasing
+                // Habilitar anti-aliasing
                 Graphics2D g2d = (Graphics2D) g;
                 g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-                // Draw circle with anti-aliasing
                 g2d.setColor(color);
                 g2d.fillOval(0, 0, getWidth(), getHeight());
+
+                g2d.setColor(Color.WHITE);
+                g2d.setFont(new Font("Arial", Font.BOLD, 12));
+                FontMetrics fm = g2d.getFontMetrics();
+                int textWidth = fm.stringWidth(symbol);
+                int textHeight = fm.getAscent();
+                g2d.drawString(symbol, (getWidth() - textWidth) / 2, (getHeight() + textHeight) / 2 - 3);
             }
         };
         button.setPreferredSize(new Dimension(15, 15));  // Tamaño del botón

@@ -1,0 +1,25 @@
+7. Utilizar hilos para simular el funcionamiento de ventas de entrada e ingreso de hinchas a un estadio de fútbol.
+Los hinchas llegan a la boletería cada 1 a 2 minutos colocándose en una fila. Un hincha puede comprar de 1 a 6 entradas
+ como máximo y puede elegir entre dos tipos de entrada, una para alentar al equipo local y otra para alentar al equipo visitante.
+  El tiempo de atención en la boletería es de 1 a 2 minutos. Luego de la compra, el hincha entrega a cada acompañante
+   una entrada y luego todos se ubican en la fila para ingresar al estadio.
+    Para evitar inconvenientes el estadio tiene dos puertas de ingreso, una para los hinchas que alientan al equipo local
+     y otra para los hinchas que alientan al equipo visitante.
+Según el tipo de entrada que sacó el hincha se ubica en la fila de la puerta de entrada que le corresponde.
+El control de ingreso tarda aproximadamente 10 segundos en verificar la entrada y permitir el ingreso.
+Para esta simulación asuma que hay 3 boleterías donde van a adquirir entradas 20 hinchas y hay 30 lugares disponibles
+ para hinchas locales y 30 lugares disponibles para hinchas visitantes.
+ Si un hincha no puede comprar todas las entradas que necesita para alentar a su equipo,
+  porque ya no queda esa cantidad de lugares disponible, se retira.
+  Al finalizar mostrar cuantos hinchas ingresaron como locales y cuantos hinchas ingresaron como visitantes.
+
+Ejemplo de los resultados que debe mostrar la simulación
+
+Ingresa a sacar entrada -> Hincha: 1 Visitante
+Ingresa a sacar entrada -> Hincha: 2 Local
+Boletería 1 -> Hincha: 1 compró 5 entradas
+Ingreso a la cancha por la puerta Visitante el Hincha: 1
+Ingreso a la cancha por la puerta Visitante el Hincha: 11
+Ingreso a la cancha por la puerta Visitante el Hincha: 12
+Ingreso a la cancha por la puerta Visitante el Hincha: 13
+Ingreso a la cancha por la puerta Visitante el Hincha: 14
